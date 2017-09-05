@@ -1,0 +1,110 @@
+<template lang="html">
+  <div>
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon">
+            <i class="glyphicon glyphicon-flag"></i>
+          </div>
+          <input class="form-control input-lg" type="text" placeholder="icon路径" v-model="socialList.src"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="glyphicon glyphicon-road"></i></div>
+          <input class="form-control input-lg" type="text" placeholder="社交链接" v-model="socialList.path"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-lg" type="button" @click="addSocial">添加</button>
+      </div>
+    </form>
+    <div class="table-responsive mrgT30">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>icon路径</th>
+            <th>社交链接</th>
+            <th>添加</th>
+          </tr>
+        </thead>
+        <tbody class="table-striped">
+          <tr v-for="(item, index) in socialList">
+            <td>{{ item.src }}</td>
+            <td>{{ item.path }}</td>
+            <td>
+              <button class="btn btn-danger" @click="removeSocial(index)">删除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {}
+  },
+  computed: {
+    socialList () {
+      return this.$store.state.socialList
+    }
+  },
+  created () {
+    this.getSocialList()
+  },
+  methods: {
+    getSocialList () {
+      this.$store.dispatch('getSocialList')
+    },
+    removeSocial (index) {
+      this.$confirm('真的要删除此社交方式吗？', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        let sta = await this.$store.dispatch('removeSocial', index)
+        if (sta) {
+          this.getSocialList()
+          this.$message({
+            type: 'success',
+            message: '删除成功'
+          })
+        } else {
+          this.$message.error('删除失败')
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        })
+      })
+    },
+    async addSocial () {
+      let data = {
+        src: this.socialList.src,
+        path: this.socialList.path
+      }
+      let sta = await this.$store.dispatch('addSocial', data)
+      if (sta) {
+        this.getSocialList()
+        this.$message({
+          type: 'success',
+          message: '添加成功'
+        })
+      } else {
+        this.$message.error('添加失败了，请重新')
+      }
+    }
+  }
+}
+</script>
+
+<style lang="css">
+.mrgT30 {
+  margin-top: 30px;
+}
+</style>
+
