@@ -28,7 +28,7 @@
     <mu-drawer :open="open" width="300" :docked="docked" @close="toggle()">
       <mu-list class="scroll" @itemClick="docked ? '' : toggle()">
         <mu-sub-header>
-        <mu-text-field  hintText="搜索歌名" @change="search" @key.enter="search" v-model="key"/>
+        <mu-text-field   label="搜索歌名"  @change="search" @key.enter="search" v-model="key" labelFloat/>
         </mu-sub-header>
         <mu-list-item :title="item.name" :key="item.name" @click="click(index)" v-for="(item, index) in songList" >
           <mu-avatar :src="item.img" slot="leftAvatar"/>
