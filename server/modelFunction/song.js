@@ -4,7 +4,7 @@ var getId = (string) => {
   return new Promise(resolve => {
     musicApi.searchSong('netease', {
       key: string,
-      limit: 2,
+      limit: 10,
       page: 1
     }).then(async (data) => {
       var arr = [];

@@ -6,7 +6,7 @@
       </router-link>
     </div>
     <div class="musicPlayer col-sm-4">
-      <musicPlayer class="fadeIn" :class="{ fadeOut: isFadeOut }"></musicPlayer>
+      <musicPlayer></musicPlayer>
     </div>
     <div class="header-right col-sm-5">
       <Search class="Search"></Search>
@@ -17,15 +17,13 @@
 
 <script>
 import NavCompoent from './Nav'
-import Search from './Search'
 import musicPlayer from './musicPlayer'
+import Search from './Search'
 export default {
   data () {
     return {
       logo: '/static/logo.png',
-      isScroll: false,
-      isFadeOut: false,
-      isFadeIn: true
+      isScroll: false
     }
   },
   mounted () {
@@ -38,10 +36,8 @@ export default {
     Position (document) {
       let top = document.body.scrollTop - 100
       if (top <= 0) {
-        this.isFadeOut = false
         this.isScroll = false
       } else {
-        this.isFadeOut = true
         this.isScroll = true
       }
     }
@@ -85,11 +81,7 @@ export default {
     margin-right:30px;
     cursor: pointer;
   }
-  .fadeOut{
-    opacity:0 !important;
-  }
-  .fadeIn{
-    transition:opacity .5s;
-    opacity:1;
+  .musicPlayer {
+    margin-top:10px;
   }
 </style>

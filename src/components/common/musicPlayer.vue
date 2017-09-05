@@ -1,4 +1,4 @@
-<template lang="html">
+<!--<template lang="html">
   <div class="musicBox">
       <div class="boxLeft">
         <span id="play" :class="icon" @click="play"></span>
@@ -19,6 +19,26 @@
         </div>
       </div>
   </div>
+</template>-->
+
+<template>
+  <div>
+    <audio id="audio" :src="musicSrc" ></audio>
+    <mu-float-button mini="true" backgroundColor="#41b131" title="点击后可搜索歌曲哦~" id="cover" icon=":glyphicon glyphicon-music" @click="toggle()"/>
+    <mu-drawer :open="open" width="300" :docked="docked" @close="toggle()">
+      <mu-list class="scroll" @itemClick="docked ? '' : toggle()">
+        <mu-sub-header>
+        <mu-text-field  hintText="搜索歌名" @change="search" @key.enter="search" v-model="key"/>
+        </mu-sub-header>
+        <mu-list-item :title="item.name" :key="item.name" @click="click(index)" v-for="(item, index) in songList" >
+          <mu-avatar :src="item.img" slot="leftAvatar"/>
+            <span slot="describe">
+              <span style="color: rgba(0, 0, 0, .87)">{{ item.author }}</span>
+            </span>
+        </mu-list-item>
+      </mu-list>
+    </mu-drawer>
+  </div>
 </template>
 
 <script>
@@ -29,7 +49,9 @@ export default {
       musicSrc: null,
       musicImg: null,
       isPlay: false,
-      key: null
+      key: null,
+      open: false,
+      docked: true
     }
   },
   computed: {
@@ -38,6 +60,10 @@ export default {
     }
   },
   methods: {
+    toggle (flag) {
+      this.open = !this.open
+      this.docked = !flag
+    },
     search () {
       let key = this.key
       setTimeout(() => {
@@ -46,15 +72,13 @@ export default {
     },
     play () {
       this.isPlay = !this.isPlay
-      let audio = document.getElementById('audio')
       var cover = document.getElementById('cover')
+      let audio = document.getElementById('audio')
       if (this.isPlay) {
         cover.style.animation = 'rotate 10s infinite linear'
-        this.icon = 'glyphicon glyphicon-pause'
         audio.play()
       } else {
         cover.style.animation = false
-        this.icon = 'glyphicon glyphicon-play'
         audio.pause()
       }
     },
@@ -67,14 +91,12 @@ export default {
       audio.load()
       if (this.isPlay) {
         cover.style.animation = 'rotate 10s infinite linear'
-        this.icon = 'glyphicon glyphicon-pause'
         audio.load()
         setTimeout(() => {
           audio.play()
         }, 150)
       } else {
         cover.style.animation = false
-        this.icon = 'glyphicon glyphicon-play'
         audio.pause()
       }
     }
@@ -120,9 +142,6 @@ export default {
   .songList{
     height:60px;
   }
-  .isShowClass {
-    display:none;
-  }
   .songList li {
     border-bottom:1px solid #515151;
     text-indent:10px;
@@ -166,5 +185,11 @@ export default {
     0% {transform:rotateZ(0deg)}
     50% {transform:rotateZ(180deg)}
     100% {transform:rotateZ(360deg)}
+  }
+  #cover{
+    transform:rotateZ(0deg);
+  }
+  .scroll{
+    overflow-y:hidden;
   }
 </style>
