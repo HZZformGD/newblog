@@ -2,9 +2,6 @@
   <div id="app">
     <transition>
       <router-view></router-view>
-      <div class="musicPlayer">
-        <musicPlayer ></musicPlayer>
-      </div>
     </transition>
     <ui-modal></ui-modal>
   </div>
