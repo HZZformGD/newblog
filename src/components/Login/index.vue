@@ -3,15 +3,13 @@
     <h1 class="page_title">登录后台管理</h1>
     <form class="form">
       <div class="form-group">
-        <label>用户名</label>
-        <input type="text" class="form-control" placeholder="username" v-model.trim="account"/>
+        <mu-text-field   label="用户名" fullWidth="true" v-model.trim="account" labelFloat/>
       </div>
       <div class="form-group">
-        <label>密码</label>
-        <input type="password" class="form-control" placeholder="password" v-model.trim="password"/>
+        <mu-text-field type="password" fullWidth="true" label="密码" v-model.trim="password" labelFloat/>
       </div>
       <div class="clearfix">
-        <button type="button" class="btn btn-empty btn-primary btn-block" @click="submitLogin">Login</button>
+        <mu-raised-button fullWidth="true" class="demo-raised-button" label="文字在后面" icon=":glyphicon glyphicon-log-in" @click="submitLogin"  primary/>
       </div>
     </form>
   </div>
