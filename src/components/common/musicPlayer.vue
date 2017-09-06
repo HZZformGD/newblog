@@ -24,7 +24,7 @@
 <template>
   <div>
     <audio id="audio" :src="musicSrc" ></audio>
-    <mu-float-button mini=true backgroundColor="#41b131" title="点击后可搜索歌曲哦~" id="cover" icon=":glyphicon glyphicon-music" @click="toggle()" />
+    <mu-float-button mini backgroundColor="#41b131" title="点击后可搜索歌曲哦~" id="cover" icon=":glyphicon glyphicon-music" @click="toggle()" />
     <mu-drawer :open="open" width="300" :docked="docked" @close="toggle()">
       <mu-list class="scroll" @itemClick="docked ? '' : toggle()">
         <mu-sub-header>
