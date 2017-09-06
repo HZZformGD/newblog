@@ -2,21 +2,13 @@
   <div>
     <form class="form-inline">
       <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="glyphicon glyphicon-flag"></i>
-          </div>
-          <input class="form-control input-lg" type="text" placeholder="text" v-model="navList.text"/>
-        </div>
+        <mu-text-field hintText="名称" icon="" v-model="navList.text"/>
       </div>
       <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-addon"><i class="glyphicon glyphicon-road"></i></div>
-          <input class="form-control input-lg" type="text" placeholder="path" v-model="navList.path"/>
-        </div>
+        <mu-text-field hintText="路径" icon="" v-model="navList.path"/>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-lg" type="button" @click="addNav">添加</button>
+        <mu-flat-button  backgroundColor="#7e57c2" label="添加" color="#FFF" @click="addNav"/>
       </div>
     </form>
     <div class="table-responsive mrgT30">
@@ -33,7 +25,7 @@
             <td>{{ item.text }}</td>
             <td>{{ item.path }}</td>
             <td>
-              <button class="btn btn-danger" @click="removeNav(index)">删除</button>
+              <mu-flat-button  backgroundColor="#ff4081" label="删除" color="#FFF" @click="removeNav(index)"/>
             </td>
           </tr>
         </tbody>

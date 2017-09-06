@@ -1,15 +1,13 @@
 <template lang="html">
   <form class="form col-sm-12">
     <div class="form-group">
-        <label >原密码</label>
-        <input type="password" class="form-control" v-model.trim="oldPassword">
+        <mu-text-field type="password" fullWidth label="原密码" v-model.trim="oldPassword" labelFloat/>
     </div>
     <div class="form-group">
-        <label>新密码</label>
-        <input type="password" class="form-control" v-model.trim="newPassword">
+        <mu-text-field type="password" fullWidth label="新密码" v-model.trim="newPassword" labelFloat/>
     </div>
     <div class="form-group">
-        <button  class="btn btn-primary btn-lg btn-block" type="button"  @click="submit">提交</button>
+        <mu-raised-button fullWidth backgroundColor="#27cacc" label="提交"  @click="submit" primary/>
     </div>
   </form>
 </template>

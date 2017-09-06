@@ -1,19 +1,16 @@
 <template lang="html">
   <form clsas="form">
     <div clsas="form-group">
-      <label>头像的链接</label>
-      <input class="form-control mrgB10" type="text" v-model="userInfo.avatar"/>
+      <mu-text-field label="头像的链接" fullWidth  v-model="userInfo.avatar" labelFloat/>
     </div>
     <div clsas="form-group">
-      <label>博客名</label>
-      <input class="form-control mrgB10" type="text" v-model="userInfo.blogTitle"/>
+      <mu-text-field label="博客名" fullWidth v-model="userInfo.blogTitle" labelFloat/>
     </div>
     <div class="form-group">
-      <label>一句介绍自己的话</label>
-      <textarea class="form-control mrgB10" v-model="userInfo.motto"></textarea>
+      <mu-text-field hintText="一句介绍自己的话" fullWidth  multiLine :rows="3" :rowsMax="4"  v-model="userInfo.motto"/>
     </div>
     <div class="form-group">
-      <button type="button" class="btn btn-primary" @click="save">保存</button>
+      <mu-raised-button label="保存" fullWidth @click="save" backgroundColor="#27cacc"/>
     </div>
   </form>
 </template>

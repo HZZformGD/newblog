@@ -1,12 +1,10 @@
 <template lang="html">
   <form>
     <div class="form-group">
-      <label>标题</label>
-      <input class="form-control" placeholder="文章标题" v-model="tempArticle.title"/>
+      <mu-text-field   label="标题" fullWidth hintText="文章标题" v-model="tempArticle.title" labelFloat/>
     </div>
     <div class="form-group">
-      <label>类型</label>
-      <input class="form-control" type="text" placeholder="不同类型用;隔开" v-model="tempArticle.types"/>
+      <mu-text-field   label="类型" fullWidth hintText="不同类型用;隔开" v-model="tempArticle.types" labelFloat/>
     </div>
     <div class="form-group">
       <label>正文</label>

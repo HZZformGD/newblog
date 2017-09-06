@@ -17,8 +17,8 @@
           </td>
           <td>{{ item.date }}</td>
           <td>
-            <button class="btn btn-primary" @click="editArticle(index)">更改</button>
-            <button class="btn btn-danger" @click="removeArticle(index)">删除</button>
+            <mu-flat-button  backgroundColor="#7e57c2" label="更改" color="#FFF" @click="editArticle(index)"/>
+            <mu-flat-button  backgroundColor="#ff4081" label="删除" color="#FFF" @click="removeArticle(index)"/>
           </td>
         </tr>
       </tbody>
