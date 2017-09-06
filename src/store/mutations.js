@@ -66,8 +66,8 @@ export default {
     state.isEditArticle = true
   },
   [types.UPDATEARTICLE] (state, data) {
-    state.isUpdateArticle = false
-    state.updateArticle = {}
+    state.isEditArticle = false
+    state.editArticle = {}
   },
   [types.SHOW_MODAL] (state, data) {
     state.modal.show = true

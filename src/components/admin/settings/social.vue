@@ -2,21 +2,13 @@
   <div>
     <form class="form-inline">
       <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-addon">
-            <i class="glyphicon glyphicon-flag"></i>
-          </div>
-          <input class="form-control input-lg" type="text" placeholder="icon路径" v-model="socialList.src"/>
-        </div>
+        <mu-text-field hintText="icon路径" icon=":fa fa-road" v-model="socialList.src"/>
       </div>
       <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-addon"><i class="glyphicon glyphicon-road"></i></div>
-          <input class="form-control input-lg" type="text" placeholder="社交链接" v-model="socialList.path"/>
-        </div>
+        <mu-text-field hintText="icon路径" icon=":fa fa-facebook" v-model="socialList.path"/>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-lg" type="button" @click="addSocial">添加</button>
+        <mu-flat-button class="addButton" icon=": fa fa-plus" backgroundColor="#7e57c2" label="添加" color="#FFF" @click="addSocial"/>
       </div>
     </form>
     <div class="table-responsive mrgT30">
@@ -33,7 +25,7 @@
             <td>{{ item.src }}</td>
             <td>{{ item.path }}</td>
             <td>
-              <button class="btn btn-danger" @click="removeSocial(index)">删除</button>
+              <mu-flat-button hintText="删除" icon=": fa fa-drop" backgroundColor="#ff4081" label="删除" color="#FFF" @click="removeSocial(index)"/>
             </td>
           </tr>
         </tbody>

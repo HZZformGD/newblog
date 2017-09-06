@@ -11,9 +11,9 @@
       <Markdown ref="markdown" :sourceContent="tempArticle.sourceContent"></Markdown>
     </div>
     <div class="form-group">
-      <button type="button" name="button" class="btn btn-danger" @click="clear">清空</button>
-      <button v-if="!isEditArticle" type="button" name="button" class="btn btn-success" @click="add">发布</button>
-      <button v-if="isEditArticle" type="button" class="btn btn-success" @click="update">更改</button>
+      <mu-flat-button  backgroundColor="#ff4081" label="清空" color="#FFF" @click="clear" />
+      <mu-flat-button v-if="!isEditArticle" backgroundColor="#7e57c2" label="发布" color="#FFF" @click="add" />
+      <mu-flat-button v-if="isEditArticle" backgroundColor="#7e57c2" label="更改"  color="#FFF" @click="update"/>
     </div>
   </form>
 </template>
@@ -68,7 +68,6 @@ export default {
       let data = this.tempArticle
       data.content = this.$refs.markdown.getHtmlValue()
       data.sourceContent = this.$refs.markdown.getMarkdownValue()
-      console.log(data)
       let sta = await this.$store.dispatch('updateArticle', data)
       if (sta) {
         this.$confirm('更新成功，是否回到列表？', '提示', {

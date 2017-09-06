@@ -1,8 +1,20 @@
 <template lang="html">
   <div class="col-xs-8 col-xs-offset-2">
-    <span class='title'>{{ articleDetails.title }}</span>
-    <article class="aritcle_content" v-html="articleDetails.content">
-    </article>
+    <div class="articles">
+      <span class='title'>{{ articleDetails.title }}</span>
+      <article class="aritcle_content" v-html="articleDetails.content"></article>
+    </div>
+    <div class="comments">
+      <mu-list>
+        <mu-sub-header>评论区</mu-sub-header>
+        <mu-list-item title="这个周末一起吃饭么?">
+          <mu-avatar src="/static/logo.png" slot="leftAvatar"/>
+          <span slot="describe">
+            <span style="color: rgba(0, 0, 0, .87)">Myron Liu -</span> 周末要来你这里出差，要不要一起吃个饭呀，实在编不下去了,哈哈哈哈哈哈
+          </span>
+        </mu-list-item>
+      </mu-list> 
+    </div>
   </div>
 </template>
 

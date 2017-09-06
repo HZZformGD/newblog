@@ -171,6 +171,7 @@ export default {
     return new Promise(resolve => {
       Axios.post('/blog_api/updateArticle', data).then((res) => {
         if (res.data.sta === true) {
+          commit(types.UPDATEARTICLE)
           resolve(res.data.sta)
         } else {
           resolve(false)

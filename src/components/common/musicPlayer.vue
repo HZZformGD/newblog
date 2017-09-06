@@ -24,11 +24,11 @@
 <template>
   <div>
     <audio id="audio" :src="musicSrc" ></audio>
-    <mu-float-button mini=true backgroundColor="#41b131" title="点击后可搜索歌曲哦~" id="cover" icon=":glyphicon glyphicon-music" @click="toggle();play()"/>
+    <mu-float-button mini=true backgroundColor="#41b131" title="点击后可搜索歌曲哦~" id="cover" icon=":glyphicon glyphicon-music" @click="toggle()" />
     <mu-drawer :open="open" width="300" :docked="docked" @close="toggle()">
       <mu-list class="scroll" @itemClick="docked ? '' : toggle()">
         <mu-sub-header>
-        <mu-text-field   label="搜索歌名"  @change="search" @key.enter="search" v-model="key" labelFloat/>
+        <mu-text-field  icon=":fa fa-search" label="搜索歌名"  @change="search" @key.enter="search" v-model="key" labelFloat/>
         </mu-sub-header>
         <mu-list-item :title="item.name" :key="item.name" @click="click(index)" v-for="(item, index) in songList" >
           <mu-avatar :src="item.img" slot="leftAvatar"/>
