@@ -9,7 +9,7 @@
         <mu-text-field type="password" fullWidth label="密码" v-model.trim="password" labelFloat/>
       </div>
       <div class="clearfix">
-        <mu-raised-button fullWidth class="demo-raised-button" backgroundColor="#27cacc" label="登录" icon=":glyphicon glyphicon-log-in" @click="submitLogin"  primary/>
+        <mu-raised-button fullWidth class="demo-raised-button"  label="登录" icon=":glyphicon glyphicon-log-in" @click="submitLogin"  primary/>
       </div>
     </form>
   </div>

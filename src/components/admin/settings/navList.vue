@@ -2,13 +2,13 @@
   <div>
     <form class="form-inline">
       <div class="form-group">
-        <mu-text-field hintText="名称" icon="" v-model="navList.text"/>
+        <mu-text-field hintText="名称" icon=":fa fa-book" v-model="navList.text"/>
       </div>
       <div class="form-group">
-        <mu-text-field hintText="路径" icon="" v-model="navList.path"/>
+        <mu-text-field hintText="路径" icon=":fa fa-road" v-model="navList.path"/>
       </div>
       <div class="form-group">
-        <mu-flat-button  backgroundColor="#7e57c2" label="添加" color="#FFF" @click="addNav"/>
+        <mu-flat-button class="addButton" icon=": fa fa-plus" backgroundColor="#7e57c2" label="添加" color="#FFF" @click="addNav"/>
       </div>
     </form>
     <div class="table-responsive mrgT30">
@@ -100,5 +100,8 @@
 <style lang="css">
 .mrgT30 {
   margin-top: 30px;
+}
+.addButton{
+  top:-8px;
 }
 </style>
