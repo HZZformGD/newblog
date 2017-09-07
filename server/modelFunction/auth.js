@@ -76,7 +76,7 @@ var oAuth = (code) => {
                     oAuthModel.find({'oauthid':info.id})
                     .lean()
                     .exec( (err,res) => {
-                        if (res) {
+                        if (res != "") {
                             resolve(res)
                         } else {
                             oauth = new oAuthModel(query);

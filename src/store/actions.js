@@ -262,5 +262,9 @@ export default {
         console.log(err)
       }
     })
+  },
+  getUserSession ({ commit }) {
+    let userSession = JSON.parse(window.sessionStorage.getItem('userSession'))
+    commit(types.GETUSERSESSION, userSession)
   }
 }

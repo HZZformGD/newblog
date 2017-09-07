@@ -23,7 +23,8 @@ const state = {
   loginState: false,
   token: '',
   editArticle: '',
-  songList: []
+  songList: [],
+  usersession: ''
 }
 
 const getters = {

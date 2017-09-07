@@ -93,6 +93,9 @@ export default {
   },
   [types.GETSONG] (state, songList) {
     state.songList = songList
+  },
+  [types.GETUSERSESSION] (state, usersession) {
+    state.usersession = usersession
   }
 }
 

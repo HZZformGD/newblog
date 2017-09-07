@@ -103,11 +103,16 @@ var signup = async (ctx, next) => {
 var oAuth = async(ctx, next) => {
     let code = ctx.params.code
     let oinfo = await auth.oAuth(code)
-    if (oinfo) {
+    if (oinfo != "") {
         ctx.response.type = 'application/json'
         ctx.response.body = {
             sta: true,
             info: oinfo
+        }
+    } else {
+        ctx.response.body = {
+            sta: false,
+            info: '出错了'
         }
     }
 
