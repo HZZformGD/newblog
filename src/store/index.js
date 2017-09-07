@@ -40,7 +40,6 @@ const getters = {
         list.time = list.time.substr(0, 10)
       })
     })
-    console.log(state.archive)
     return state.archive
   }
 }

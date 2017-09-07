@@ -18,6 +18,11 @@
         </mu-list-item>
       </mu-list> 
     </div>
+    <div class="input_area">
+      <mu-text-field v-model="input_words" :disabled="canCom" label="留下你的脚印~~" fullWidth icon=":fa fa-commenting-o"  multiLine :rows="6" labelFloat/>
+      <mu-raised-button v-if="canCom" slot="right"  href="https://github.com/login/oauth/authorize?client_id=37169fc792fb75ef71b3&state=1994&redirect_uri=http://127.0.0.1:8090/home/article/callback"  class="sign-in" label="登录" icon=":fa fa-sign-in" primary/>
+      <mu-raised-button v-if="!canCom" slot="right" @click="comments"  class="comments" label="发表" icon=":fa fa-comments" primary/>
+    </div>
   </div>
 </template>
 
@@ -27,6 +32,8 @@ export default {
   data () {
     return {
       reply_words: '',
+      input_words: '',
+      canCom: true,
       commentsList: [
         {
           replyer_name: '黄镇展',
@@ -61,6 +68,12 @@ export default {
       } else {
         reply.style.display = 'none'
       }
+    },
+    comments () {
+
+    },
+    signIn () {
+      this.canCom = false
     },
     reply (id) {
       var field = document.getElementById('field_' + id)
@@ -104,5 +117,11 @@ export default {
   }
   .noShow {
     display: none;
+  }
+  .sign-in {
+    float:right;
+  }
+  .comments {
+    float:right;
   }
 </style>

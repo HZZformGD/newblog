@@ -185,8 +185,6 @@ export default {
   },
   removeArticle ({commit, state}, index) {
     let id = [...state.articles][index]._id
-    console.log(state.articles)
-    console.log(id)
     return new Promise(resolve => {
       Axios.get('/blog_api/removeArticle/' + id).then((res) => {
         if (res.data.sta === true) {
@@ -219,7 +217,6 @@ export default {
   getSocialList ({ commit }) {
     Axios.get('/blog_api/social/get').then((res) => {
       if (res.data.sta) {
-        console.log(res.data.info)
         commit(types.GETSOCIALLIST, res.data.info)
       }
     })
