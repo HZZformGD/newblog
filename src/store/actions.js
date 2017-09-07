@@ -266,5 +266,14 @@ export default {
   getUserSession ({ commit }) {
     let userSession = JSON.parse(window.sessionStorage.getItem('userSession'))
     commit(types.GETUSERSESSION, userSession)
+  },
+  commentSub ({ commit }, data) {
+    return new Promise(resolve => {
+      Axios.post('/blog_api/comments', data).then(res => {
+        if (res.data.sta === true) {
+          resolve(res.data.sta)
+        }
+      })
+    })
   }
 }

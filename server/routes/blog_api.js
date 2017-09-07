@@ -5,6 +5,7 @@ const nav = require('../controllers/nav')
 const router = require('koa-router')();
 const social = require('../controllers/social');
 const song = require('../controllers/song');
+const comments = require('../controllers/comments');
 
 router.get('/getUserInfo/', userInfo.getUserInfo)
 router.post('/editUserInfo', userInfo.editUserInfo)
@@ -23,4 +24,6 @@ router.get('/social/get', social.getSocial)
 router.get('/social/remove/:id', social.removeSocial)
 router.post('/social/add', social.addSocial)
 router.get('/song/search/:key', song.getSong)
+router.post('/comments', comments.insert)
+router.post('/getcommentsList',comments.getcommentsList)
 module.exports = router;

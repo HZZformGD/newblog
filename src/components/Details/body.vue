@@ -21,7 +21,12 @@
     <div class="input_area">
       <mu-text-field v-model="input_words" :disabled="!(getUserInfoSession)" label="留下你的脚印~~" fullWidth icon=":fa fa-commenting-o"  multiLine :rows="6" labelFloat/>
       <mu-raised-button v-if=" !(getUserInfoSession)" slot="right"  href="https://github.com/login/oauth/authorize?client_id=37169fc792fb75ef71b3&state=1994&redirect_uri=http://127.0.0.1:8090/home/article/callback/"  class="sign-in"  icon=":fa fa-github-alt" primary/>
-      <mu-raised-button v-if="(getUserInfoSession)" slot="right" @click="comments"  class="comments" label="发表" icon=":fa fa-comments" primary/>
+      <mu-raised-button v-if="(getUserInfoSession)" class="comments" @click="comments"  label="发表" icon=":fa fa-comments" primary/>
+      <div class="info" v-if="getUserInfoSession">
+        <mu-list-item :title="getUserInfoSession.nickname" disabled>
+          <mu-avatar slot="left" :src="getUserInfoSession.avatar"/>
+        </mu-list-item>
+      </div>
     </div>
   </div>
 </template>
@@ -79,8 +84,21 @@ export default {
         reply.style.display = 'none'
       }
     },
-    comments () {
-
+    async comments () {
+      let comment = this.input_words
+      let articleId = this.$route.params.id
+      let commerId = this.getUserInfoSession._id
+      let toId = '000000000000000000000000'
+      let data = {
+        'replay_comment': comment,
+        'articleId': articleId,
+        'commerId': commerId,
+        'to_id': toId
+      }
+      let sta = await this.$store.dispatch('commentSub', data)
+      if (sta === true) {
+        this.$router.push({path: '/home/article/' + articleId})
+      }
     },
     signIn () {
       this.canCom = false
@@ -130,8 +148,13 @@ export default {
   }
   .sign-in {
     float:right;
+    z-index:10;
   }
   .comments {
+    z-index:10;
     float:right;
+  }
+  .input_area {
+    margin-bottom:50px;
   }
 </style>

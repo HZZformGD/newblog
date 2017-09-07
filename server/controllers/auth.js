@@ -53,7 +53,6 @@ var changePSW = async (ctx, next) => {
         _id : id
     }
     newPassword = bcrypt.hashSync(newPassword)
-    console.log('newPassword',newPassword)
     let data =  await auth.log(query);
     if (data) {
         if (bcrypt.compareSync(oldPassword, data[0].password)) {
