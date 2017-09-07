@@ -95,15 +95,20 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const token = sessionStorage.getItem('token')
   let auth = to.matched[0].meta.requiresAuth
+  const token = sessionStorage.getItem('token')
   let code = to.query.code
+  console.log(from)
   if (code !== undefined) {
     Axios.get('/auth/oAuth/' + code)
     .then((res) => {
-      if (res.sta === true) {
-        console.log(from)
-      } 
+      if (res.data.sta) {
+        next({
+          path: '/home/article'
+        })
+      } else {
+        next()
+      }
     }).catch((err) => {
       console.log(err)
     })
