@@ -64,7 +64,7 @@ var oAuth = (code) => {
                     method:'get'
                 }
                 Axios(option).then((result) => {
-                    let date = new Date()
+                    let date = new Date(Date.now() + (8 * 60 * 60 * 1000))
                     let time = date.toLocaleString()
                     let info = result.data
                     let query = {
@@ -73,10 +73,20 @@ var oAuth = (code) => {
                         oauthid:info.id,
                         addtime:time
                     }
-                    oauth = new oAuthModel(query);
-                    oauth.save((err,res) => {
+                    oAuthModel.find({'oauthid':info.id})
+                    .lean()
+                    .exec( (err,res) => {
                         if (res) {
                             resolve(res)
+                        } else {
+                            oauth = new oAuthModel(query);
+                            oauth.save((err,res) => {
+                                if (res) {
+                                    resolve(res)
+                                } else {
+                                    resolve(false)
+                                }
+                            })
                         }
                     })
                 }).catch((error) => {
