@@ -1,8 +1,6 @@
 const auth = require('../modelFunction/auth');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const Axios = require('axios');
-const querystring = require("querystring");
 
 var log = async (ctx, next) => {
     var Account = ctx.request.body.account,
