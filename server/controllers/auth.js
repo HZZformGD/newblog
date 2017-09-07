@@ -1,6 +1,8 @@
 const auth = require('../modelFunction/auth');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const Axios = require('axios');
+const querystring = require("querystring");
 
 var log = async (ctx, next) => {
     var Account = ctx.request.body.account,
@@ -100,10 +102,22 @@ var signup = async (ctx, next) => {
     ctx.response.body = JSON.stringify(data);
 }
 
+var oAuth = async(ctx, next) => {
+    let code = ctx.params.code
+    let oinfo = await auth.oAuth(code)
+    if (oinfo) {
+        ctx.response.type = 'application/json'
+        ctx.response.body = {
+            sta: true,
+            info: oinfo
+        }
+    }
 
+}
 
 module.exports = {
     log,
     signup,
-    changePSW
+    changePSW,
+    oAuth
 }

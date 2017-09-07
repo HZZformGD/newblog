@@ -44,7 +44,6 @@ var searchByKey = async (ctx, next) => {
     var key = ctx.params.key;
     var limit = Number(ctx.params.limit) || 1;
     var skip = Number(ctx.params.skip) || 1;
-    //console.log(key, limit, skip)
     key = new RegExp(key, 'i');
     var data = await articles.searchByKey(key, skip, limit);
     if (data) {

@@ -9,7 +9,7 @@ const Koa = require('koa'),
     blog = require('./server/routes/blog_api'),
     path = require('path'),
     server = require('koa-static'),
-    historyApiFallback = require('koa2-history-api-fallback')
+    historyApiFallback = require('koa2-history-api-fallback'),
     jwt = require('koa-jwt');
 const app = new Koa();
 

@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody class="table-striped">
-        <tr v-for="(item, index) in articleList :key="item.reply_id"">
+        <tr v-for="(item, index) in articleList ">
           <td>{{ item.title }}</td>
           <td class="type_td">
             <span v-for="type in item.types">{{ type }}</span>
