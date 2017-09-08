@@ -48,9 +48,7 @@ export default {
   },
   created () {
     this.getUserSession()
-    if (!this.$route.params.id) {
-      this.getComments()
-    }
+    this.getComments()
   },
   computed: {
     getUserInfoSession () {
