@@ -101,7 +101,8 @@ var signup = async (ctx, next) => {
 
 var oAuth = async(ctx, next) => {
     let code = ctx.params.code
-    let oinfo = await auth.oAuth(code)
+    let type =ctx.params.type
+    let oinfo = await auth.oAuth(code, type)
     if (oinfo != "") {
         ctx.response.type = 'application/json'
         ctx.response.body = {

@@ -98,8 +98,9 @@ router.beforeEach((to, from, next) => {
   let auth = to.matched[0].meta.requiresAuth
   const token = sessionStorage.getItem('token')
   let code = to.query.code
+  let type = to.query.type
   if (code !== undefined) {
-    Axios.get('/auth/oAuth/' + code)
+    Axios.get('/auth/oAuth/' + code + '/' + type)
     .then((res) => {
       if (res.data.sta) {
         window.sessionStorage.setItem('userSession', JSON.stringify(res.data.info[0]))
