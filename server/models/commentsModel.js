@@ -3,8 +3,8 @@ const connect = require('../config/db').connect
 
 const commentsSchema = new mongoose.Schema(
     {
-        commerId: [{type:mongoose.Schema.Types.ObjectId,ref:'oauth'}],
-        to_id: [{type:mongoose.Schema.Types.ObjectId,ref:'oauth'}],
+        commerId: {type:mongoose.Schema.Types.ObjectId,ref:'oauth'},
+        to_id: {type:mongoose.Schema.Types.ObjectId,ref:'oauth'},
         replay_comment: String,
         articleId: mongoose.Schema.Types.ObjectId,
         time: Date

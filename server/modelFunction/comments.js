@@ -19,7 +19,8 @@ var commentsList = (id) => {
   return new Promise(resolve => {
     comments.find({articleId:id})
     .lean()
-    .populate({path:'commerId',select:'nickname'},{path:'to_id',select:'nickname'})
+    .sort({ time: 1 })
+    .populate([{path:'commerId',select:'nickname avatar'},{path:'to_id',select:'nickname avatar'}])
     .exec((err,res) => {
       if (res) {
         console.log('res',res)

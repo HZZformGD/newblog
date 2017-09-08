@@ -24,7 +24,8 @@ const state = {
   token: '',
   editArticle: '',
   songList: [],
-  usersession: ''
+  usersession: '',
+  comments: ''
 }
 
 const getters = {
@@ -33,6 +34,12 @@ const getters = {
       article.date = moment(new Date(article.date)).locale('zh-cn').calendar()
     })
     return state.articles
+  },
+  getComments: state => {
+    for (var comment of state.comments) {
+      comment.time = moment(new Date(comment.time)).locale('zh-cn').calendar()
+    }
+    return state.comments
   },
   getArchiveList: state => {
     state.archive = convert(state.archive)

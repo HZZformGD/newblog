@@ -4,17 +4,18 @@
       <span class='title'>{{ articleDetails.title }}</span>
       <article class="aritcle_content" v-html="articleDetails.content"></article>
     </div>
-    <div class="comments">
+    <div class="comments_area">
       <mu-list>
         <mu-sub-header class="comment_area">评论区</mu-sub-header>
-        <mu-list-item v-for="(item, index) in commentsList" :key="item.replyer_id"  :title="item.replyer_name">
-          <mu-avatar src="/static/logo.png" slot="leftAvatar"/>
+        <mu-list-item v-for="(item, index) in commentsList"  :key="item.commerId._id"  :title="item.commerId.nickname">
+          <mu-avatar :src="item.commerId.avatar" slot="leftAvatar"/>
           <span slot="describe">
-            <span style="color: rgba(0, 0, 0, .87)">to {{ item.to_name }} -</span> {{ item.reply_content }}
+            <span v-if="item.to_id" style="color: rgba(0, 0, 0, .87)">to {{ item.to_id.nickname }} -</span> {{ item.replay_comment }} 
+            <span class="commentTime">{{ item.time }}</span>
           </span>
-          <mu-icon slot="right" value=":fa fa-reply" tooltip="回复" @click.stop="showReply(item.replyer_id)"/>
-          <mu-text-field :id="'field_'+item.replyer_id" class="noShow" hintText="回复些什么好呢" v-model="reply_words" fullWidth  multiLine :rows="3" :rowsMax="6"/>
-          <mu-flat-button :id="'reply_'+item.replyer_id" class="noShow" label="回复" icon=":fa fa-android" @click="reply(item.replyer_id)" primary/>
+          <mu-icon slot="right" v-if="!(item.commerId._id === getUserInfoSession._id)" value=":fa fa-reply" tooltip="回复" @click="showReply(item._id)"/>
+          <mu-text-field :id="'field_'+item._id" class="noShow" hintText="回复些什么好呢" v-model="reply_words" fullWidth  multiLine :rows="3" :rowsMax="6"/>
+          <mu-flat-button :id="'reply_'+item._id" class="noShow" label="回复" icon=":fa fa-android" @click="reply(item._id, item.commerId._id)" primary/>
         </mu-list-item>
       </mu-list> 
     </div>
@@ -37,36 +38,29 @@ export default {
   data () {
     return {
       reply_words: '',
-      input_words: '',
-      commentsList: [
-        {
-          replyer_name: '黄镇展',
-          replyer_avatar: '/static/logo.png',
-          replyer_id: '1',
-          reply_content: '周末要来你这里出差，要不要一起吃个饭呀，实在编不下去了,哈哈哈哈哈哈末要来你这里出差，要不要一起吃个饭呀，实在编不下去了,哈哈哈哈哈哈末要来你这里出差，要不要一起吃个饭呀，实在编不下去了,哈哈哈哈哈哈',
-          to_name: 'Mike James',
-          to_id: '2'
-        },
-        {
-          replyer_name: 'Mike James',
-          replyer_avatar: '/static/logo.png',
-          replyer_id: '2',
-          reply_content: '不了不了，我不想吃这个 哈哈',
-          to_name: '黄镇展',
-          to_id: '1'
-        }
-      ]
+      input_words: ''
     }
   },
   created () {
     this.getUserSession()
+    this.getComments()
   },
   computed: {
     getUserInfoSession () {
       return this.$store.state.usersession
+    },
+    commentsList () {
+      return this.$store.state.comments
     }
   },
   methods: {
+    getComments () {
+      let articleId = this.$route.params.id
+      let data = {
+        'articleId': articleId
+      }
+      this.$store.dispatch('getComments', data)
+    },
     getUserSession () {
       this.$store.dispatch('getUserSession')
     },
@@ -88,7 +82,7 @@ export default {
       let comment = this.input_words
       let articleId = this.$route.params.id
       let commerId = this.getUserInfoSession._id
-      let toId = '000000000000000000000000'
+      let toId = 'ffffffffffffffffffffffff'
       let data = {
         'replay_comment': comment,
         'articleId': articleId,
@@ -97,15 +91,17 @@ export default {
       }
       let sta = await this.$store.dispatch('commentSub', data)
       if (sta === true) {
-        this.$router.push({path: '/home/article/' + articleId})
+        this.getComments()
+        this.input_words = ''
       }
     },
     signIn () {
       this.canCom = false
     },
-    reply (id) {
+    async reply (id, cid) {
       var field = document.getElementById('field_' + id)
       var reply = document.getElementById('reply_' + id)
+      console.log()
       if (field.style.display === '' || field.style.display === 'none') {
         field.style.display = 'block'
       } else {
@@ -115,6 +111,23 @@ export default {
         reply.style.display = 'block'
       } else {
         reply.style.display = 'none'
+      }
+      let comment = field.getElementsByTagName('textarea')[0].value
+      let articleId = this.$route.params.id
+      let commerId = this.getUserInfoSession._id
+      let toId = cid
+      let data = {
+        'replay_comment': comment,
+        'articleId': articleId,
+        'commerId': commerId,
+        'to_id': toId
+      }
+      let sta = await this.$store.dispatch('commentSub', data)
+      if (sta === true) {
+        reply.style.display = 'none'
+        field.style.display = 'none'
+        this.getComments()
+        comment = ''
       }
     }
   }
@@ -156,5 +169,8 @@ export default {
   }
   .input_area {
     margin-bottom:50px;
+  }
+  .commentTime {
+    float: right;
   }
 </style>

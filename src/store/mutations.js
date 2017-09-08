@@ -96,6 +96,9 @@ export default {
   },
   [types.GETUSERSESSION] (state, usersession) {
     state.usersession = usersession
+  },
+  [types.GETCOMMENTS] (state, comments) {
+    state.comments = comments
   }
 }
 

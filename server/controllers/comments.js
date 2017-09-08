@@ -5,13 +5,6 @@ var insert = async (ctx, next) => {
   let date = new Date()
   let time = date.toLocaleString()
   let to_id= ctx.request.body.to_id
-  if (typeof to_id === 'string') {
-    to_id = Number.parseInt(to_id)
-    to_id = mongoose.Types.ObjectId(to_id)
-  } else {
-    to_id = mongoose.Types.ObjectId(to_id)
-  }
-
   let data = {
     'commerId': ctx.request.body.commerId,
     'to_id':  to_id,

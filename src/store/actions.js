@@ -275,5 +275,12 @@ export default {
         }
       })
     })
+  },
+  getComments ({ commit }, articleId) {
+    Axios.post('/blog_api/getcommentsList', articleId).then(res => {
+      if (res.data.sta === true && res.data.info !== '') {
+        commit(types.GETCOMMENTS, res.data.info)
+      }
+    })
   }
 }
