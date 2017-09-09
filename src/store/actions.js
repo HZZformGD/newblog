@@ -282,5 +282,37 @@ export default {
         commit(types.GETCOMMENTS, res.data.info)
       }
     })
+  },
+  getUnviewCommentsCount ({ commit }) {
+    Axios.get('/blog_api/getUnViewComments').then(res => {
+      if (res.data.sta === true) {
+        commit(types.GETUNVIEWCOMMENTSCOUNT, res.data.info)
+      }
+    })
+  },
+  ViewedComments ({ commit }) {
+    return new Promise(resolve => {
+      Axios.get('/blog_api/ViewedComments').then(res => {
+        if (res.data.sta === true) {
+          resolve(true)
+        }
+      })
+    })
+  },
+  oAuthList ({ commit }) {
+    Axios.get('/blog_api/oAuthList').then(res => {
+      if (res.data.sta === true) {
+        commit(types.OAUTHLIST, res.data.info)
+      }
+    })
+  },
+  changeShow ({ commit }, data) {
+    return new Promise(resolve => {
+      Axios.post('/blog_api/changeShow', data).then(res => {
+        if (res.data.sta === true) {
+          resolve(true)
+        }
+      })
+    })
   }
 }

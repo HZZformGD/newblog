@@ -6,7 +6,6 @@ import 'muse-ui/dist/muse-ui.css'
 import 'element-ui/lib/theme-default/index.css'
 import './assets/styles/index.css'
 import './assets/styles/markdown.css'
-import './assets/styles/font-awesome-4.7.0/css/font-awesome.min.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'animate.css'
 import VueRouter from 'vue-router'
@@ -61,6 +60,14 @@ const router = new VueRouter({
               component: resolve => require(['./components/admin/settings/userInfo'], resolve)
             }
           ]
+        },
+        {
+          path: 'oAuth',
+          component: resolve => require(['./components/admin/oAuth'], resolve)
+        },
+        {
+          path: 'comments',
+          component: resolve => require(['./components/admin/comments'], resolve)
         }
       ]
     },

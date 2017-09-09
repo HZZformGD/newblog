@@ -118,9 +118,27 @@ var oAuth = async(ctx, next) => {
 
 }
 
+var oAuthList = async (ctx, next) => {
+  let oAuthList = await auth.oAuthList()
+  if (oAuthList !== '' && oAuthList !== null) {
+    ctx.response.type = 'application/json'
+    ctx.response.body = {
+      sta: true,
+      info: oAuthList
+    }
+  } else {
+    ctx.response.type = 'application/json'
+    ctx.response.body = {
+      sta: false,
+      info: '出错了'
+    }
+  }  
+}
+
 module.exports = {
     log,
     signup,
     changePSW,
-    oAuth
+    oAuth,
+    oAuthList
 }

@@ -99,6 +99,12 @@ export default {
   },
   [types.GETCOMMENTS] (state, comments) {
     state.comments = comments
+  },
+  [types.GETUNVIEWCOMMENTSCOUNT] (state, count) {
+    state.unviewCommentsCount = count
+  },
+  [types.OAUTHLIST] (state, oAuthList) {
+    state.oAuthList = oAuthList
   }
 }
 
