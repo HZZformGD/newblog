@@ -98,7 +98,7 @@ var oAuth = (code, type) => {
                     console.log(err)
                 })
             case 'github':
-                let git_url = 'https://github.com/login/oauth/access_token?client_id=37169fc792fb75ef71b3&client_secret=f92d22863520d88d40d81f2d78bc9f37c7dde6a9&code=' + code + '&redirect_uri=http://127.0.0.1:8090/home/article/callback?type=github'
+                let git_url = 'https://github.com/login/oauth/access_token?client_id=37169fc792fb75ef71b3&client_secret=f92d22863520d88d40d81f2d78bc9f37c7dde6a9&code=' + code + '&redirect_uri=http://127.0.0.1:8090/callback?type=github'
                 let git_opt = {
                     url:git_url,
                     responsetype:'json',

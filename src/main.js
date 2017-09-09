@@ -90,6 +90,11 @@ const router = new VueRouter({
           component: resolve => require(['./components/Archive/index'], resolve)
         }
       ]
+    },
+    {
+      path: '/callback',
+      name: 'callback',
+      component: resolve => require(['./components/common/callback'], resolve)
     }
   ]
 })
@@ -99,7 +104,8 @@ router.beforeEach((to, from, next) => {
   const token = sessionStorage.getItem('token')
   let code = to.query.code
   let type = to.query.type
-  if (code !== undefined) {
+  let arr = ['github', 'weibo']
+  if (code !== undefined && arr.includes(type)) {
     Axios.get('/auth/oAuth/' + code + '/' + type)
     .then((res) => {
       if (res.data.sta) {
