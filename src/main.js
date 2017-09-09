@@ -110,8 +110,9 @@ router.beforeEach((to, from, next) => {
     .then((res) => {
       if (res.data.sta) {
         window.sessionStorage.setItem('userSession', JSON.stringify(res.data.info[0]))
+        let id = sessionStorage.getItem('current_article_id')
         next({
-          path: '/home/article'
+          path: '/home/article/' + id
         })
       } else {
         next()
@@ -134,19 +135,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
-  // if (to.path === '/') {
-  //   if (token !== 'null' && token != null) {
-  //     next('/todolist')
-  //   }
-  //   next()
-  // } else {
-  //   if (token !== 'null' && token != null) {
-  //     Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token
-  //     next()
-  //   } else {
-  //     next('/')
-  //   }
-  // }
 })
 
 new Vue({

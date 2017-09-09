@@ -68,6 +68,7 @@ export default {
   methods: {
     getComments () {
       let articleId = this.$route.params.id
+      window.sessionStorage.setItem('current_article_id', articleId)
       let data = {
         'articleId': articleId
       }
