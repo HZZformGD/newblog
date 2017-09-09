@@ -13,7 +13,7 @@
             <span v-if="item.to_id" style="color: rgba(0, 0, 0, .87)">to {{ item.to_id.nickname }} -</span> {{ item.replay_comment }} 
             <span class="commentTime">{{ item.time }}</span>
           </span>
-          <mu-icon slot="right" v-if="!(item.commerId._id === getUserInfoSession._id)" value=":fa fa-reply" tooltip="回复" @click="showReply(item._id)"/>
+          <mu-icon slot="right" v-if="!(item.commerId._id === getUserInfoSession._id || getUserInfoSession._id ===0)" value=":fa fa-reply" tooltip="回复" @click="showReply(item._id)"/>
           <mu-text-field :id="'field_'+item._id" class="noShow" hintText="回复些什么好呢" v-model="reply_words" fullWidth  multiLine :rows="3" :rowsMax="6"/>
           <mu-flat-button :id="'reply_'+item._id" class="noShow" label="回复" icon=":fa fa-android" @click="reply(item._id, item.commerId._id)" primary/>
         </mu-list-item>
@@ -52,7 +52,14 @@ export default {
   },
   computed: {
     getUserInfoSession () {
-      return this.$store.state.usersession
+      if (this.$store.state.usersession) {
+        return this.$store.state.usersession
+      } else {
+        let data = {
+          '_id': 0
+        }
+        return data
+      }
     },
     commentsList () {
       return this.$store.state.comments
