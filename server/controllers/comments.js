@@ -1,9 +1,10 @@
 const comments = require('../modelFunction/comments');
 const mongoose=require('mongoose');
+const moment = require('moment')
 
 var insert = async (ctx, next) => {
-  let date = new Date()
-  let time = date.toLocaleString()
+  let date = moment()
+  let time = date.format()
   let to_id= ctx.request.body.to_id
   let data = {
     'commerId': ctx.request.body.commerId,
@@ -30,7 +31,7 @@ var insert = async (ctx, next) => {
 }
 
 var getcommentsList = async (ctx, next) => {
-  let id = ctx.request.body.articleId 
+  let id = ctx.request.body.articleId
   id = mongoose.Types.ObjectId(id)
   let lists = await comments.commentsList(id)
   if (lists !== '' && lists !== null) {

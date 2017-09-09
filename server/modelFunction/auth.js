@@ -2,6 +2,7 @@ const model = require('../models/userModel');
 const oAuthModel = require('../models/oAuthModel');
 const Axios = require('axios');
 const querystring = require("querystring");
+const moment =require('moment');
 
 var log = function (query) {
     return new Promise(resolve =>{
@@ -64,9 +65,7 @@ var oAuth = (code, type) => {
                             method:'get',
                             responsetype:'json'
                         }).then(res => {
-                            console.log(res.data)
-                            let date = new Date(Date.now() + (8 * 60 * 60 * 1000))
-                            let time = date.toLocaleString()
+                            let time = moment().format();
                             let info = res.data
                             let query = {
                                 nickname:info.screen_name,
@@ -115,8 +114,7 @@ var oAuth = (code, type) => {
                             method:'get'
                         }
                         Axios(option).then((result) => {
-                            let date = new Date(Date.now() + (8 * 60 * 60 * 1000))
-                            let time = date.toLocaleString()
+                            let time = moment().format();
                             let info = result.data
                             let query = {
                                 nickname:info.login,

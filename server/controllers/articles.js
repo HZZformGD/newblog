@@ -1,4 +1,5 @@
 const articles = require('../modelFunction/articles');
+const moment =require('moment');
 
 
 var getArticles = async (ctx, next) => {
@@ -102,10 +103,10 @@ var addArticles = async (ctx, next) => {
     let title = ctx.request.body.title
     let content = ctx.request.body.content
     let sourceContent = ctx.request.body.sourceContent
-    let date = new Date()
-    let createTime = date.toLocaleString()
-    let createYear = date.getFullYear()
-    let createMonth = date.getMonth()
+    let date = moment()
+    let createTime = date.format()
+    let createYear = date.year()
+    let createMonth = date.month()+1
     let types = ctx.request.body.types
     types = types.split('；')
     console.log(typeof types)
