@@ -62,7 +62,7 @@ export default {
       }
     },
     commentsList () {
-      return this.$store.state.comments
+      return this.$store.getters.getComments
     }
   },
   methods: {

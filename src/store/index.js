@@ -37,27 +37,18 @@ const getters = {
   },
   getComments: state => {
     for (var comment of state.comments) {
-      comment.time = moment(new Date(comment.time)).locale('zh-cn').calendar()
+      comment.time = moment().locale('zh-cn').calendar(comment.time)
     }
     return state.comments
   },
   getArchiveList: state => {
-    state.archive = convert(state.archive)
-    state.archive.map((item, index) => {
-      item[0].articleList.map(list => {
-        list.time = list.time.substr(0, 10)
-      })
-    })
+    for (var items of state.archive) {
+      for (var item of items.articleList) {
+        item.time = moment().locale('zh-cn').calendar(item.time)
+      }
+    }
     return state.archive
   }
-}
-
-function convert (original) {
-  var multiArray = []
-  for (var key in original) {
-    multiArray.push([ original[key] ])
-  }
-  return multiArray
 }
 
 export default new Vuex.Store({
