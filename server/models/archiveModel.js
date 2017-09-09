@@ -1,6 +1,8 @@
 const mongoose = require('../config/db').mongoose
 const connect = require('../config/db').connect
 
+db = mongoose.connection;
+
 
 const archiveSchema = new mongoose.Schema({
   title: String,

@@ -26,4 +26,8 @@ router.post('/social/add', social.addSocial)
 router.get('/song/search/:key', song.getSong)
 router.post('/comments', comments.insert)
 router.post('/getcommentsList',comments.getcommentsList)
-module.exports = router;
+router.post('/changeShow', comments.changeShow)
+router.get('/getUnViewComments', comments.getUnViewComments)
+router.get('/ViewedComments', comments.ViewedComments)
+router.get('/oAuthList', auth.oAuthList)
+module.exports = router

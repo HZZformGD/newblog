@@ -5,7 +5,7 @@
         <mu-text-field hintText="icon路径" icon=":fa fa-road" v-model="socialList.src"/>
       </div>
       <div class="form-group">
-        <mu-text-field hintText="icon路径" icon=":fa fa-facebook" v-model="socialList.path"/>
+        <mu-text-field hintText="社交链接" icon=":fa fa-facebook" v-model="socialList.path"/>
       </div>
       <div class="form-group">
         <mu-flat-button class="addButton" icon=": fa fa-plus" backgroundColor="#7e57c2" label="添加" color="#FFF" @click="addSocial"/>

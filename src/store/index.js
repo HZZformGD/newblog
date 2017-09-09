@@ -24,8 +24,10 @@ const state = {
   token: '',
   editArticle: '',
   songList: [],
-  usersession: {'_id': 0},
-  comments: ''
+  usersession: '',
+  comments: '',
+  unviewCommentsCount: 0,
+  oAuthList: ''
 }
 
 const getters = {
@@ -38,6 +40,12 @@ const getters = {
   getComments: state => {
     for (var comment of state.comments) {
       comment.time = moment().locale('zh-cn').calendar(comment.time)
+      if (Object.is(comment.to_id, null)) {
+        comment.to_id = {
+          '_id': 0,
+          'nickname': ''
+        }
+      }
     }
     return state.comments
   },
@@ -48,6 +56,12 @@ const getters = {
       }
     }
     return state.archive
+  },
+  getOAuthList: state => {
+    for (var item of state.oAuthList) {
+      item.addtime = moment().locale('zh-cn').calendar(item.addtime)
+    }
+    return state.oAuthList
   }
 }
 

@@ -27,6 +27,9 @@
               {{ getTime }}好，{{ userInfo.account.name }} ~
             </figcaption>
             <img :src="userInfo.account.avatar"/>
+            <i v-if="!Object.is(count, 0)" :class="viewClass" @click="viewed">未读消息</i>
+            <el-badge  :value="count" :max="10" class="item">
+            </el-badge>
           </figure>
         </div>
       </div>
@@ -64,8 +67,19 @@ export default {
           text: '设置',
           path: '/admin/settings',
           icon: 'glyphicon glyphicon-cog'
+        },
+        {
+          text: 'oAuth用户',
+          path: '/admin/oAuth',
+          icon: 'fa fa-user-circle-o'
+        },
+        {
+          text: 'oAuth评论',
+          path: '/admin/comments',
+          icon: 'fa fa-commenting-o'
         }
-      ]
+      ],
+      viewClass: 'fa fa-bell faa-ring animated View'
     }
   },
   computed: {
@@ -74,10 +88,14 @@ export default {
     },
     getTime () {
       return moment().locale('zh-cn').format('a')
+    },
+    count () {
+      return this.$store.state.unviewCommentsCount
     }
   },
   created () {
     this.verifyToken()
+    this.getUnviewCommentsCount()
   },
   methods: {
     verifyToken () {
@@ -92,6 +110,15 @@ export default {
         this.$store.dispatch('signOut')
         this.$router.go('/')
       })
+    },
+    async viewed () {
+      let res = await this.$store.dispatch('ViewedComments')
+      if (Object.is(res, true)) {
+        this.getUnviewCommentsCount()
+      }
+    },
+    getUnviewCommentsCount () {
+      this.$store.dispatch('getUnviewCommentsCount')
     }
   }
 }
@@ -202,5 +229,8 @@ export default {
   .bottom-nav li {
     flex:1;
     list-style: none;
+  }
+  .View:hover,.View:focus{
+    cursor: pointer;
   }
 </style>

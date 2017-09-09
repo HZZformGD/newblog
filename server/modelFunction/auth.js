@@ -50,7 +50,7 @@ var oAuth = (code, type) => {
     return new Promise(resolve => {
         switch (type) {
             case 'weibo':
-                let weibo_url = 'https://api.weibo.com/oauth2/access_token?client_id=3328252567&client_secret=8f20a75f5a2a86a1fa2ec19ed70f578c&grant_type=authorization_code&redirect_uri=http://127.0.0.1:8090/home/article/callback?type=weibo&code=' + code
+                let weibo_url = 'https://api.weibo.com/oauth2/access_token?client_id=3328252567&client_secret=8f20a75f5a2a86a1fa2ec19ed70f578c&grant_type=authorization_code&redirect_uri=http://www.huangzhenzhan.club/callback?type=weibo&code=' + code
                 let weibo_opt = {
                     url:weibo_url,
                     responsetype:'json',
@@ -65,13 +65,15 @@ var oAuth = (code, type) => {
                             method:'get',
                             responsetype:'json'
                         }).then(res => {
+                            console.log(res.data)
                             let time = moment().format();
                             let info = res.data
                             let query = {
                                 nickname:info.screen_name,
                                 avatar:info.profile_image_url,
                                 oauthid:info.id,
-                                addtime:time
+                                addtime:time,
+                                from:'微博'
                             }
                             oAuthModel.find({'oauthid':info.id})
                             .lean()
@@ -97,7 +99,7 @@ var oAuth = (code, type) => {
                     console.log(err)
                 })
             case 'github':
-                let git_url = 'https://github.com/login/oauth/access_token?client_id=37169fc792fb75ef71b3&client_secret=f92d22863520d88d40d81f2d78bc9f37c7dde6a9&code=' + code + '&redirect_uri=http://127.0.0.1:8090/home/article/callback?type=github'
+                let git_url = 'https://github.com/login/oauth/access_token?client_id=37169fc792fb75ef71b3&client_secret=f92d22863520d88d40d81f2d78bc9f37c7dde6a9&code=' + code + '&redirect_uri=http://127.0.0.1:8090/callback?type=github'
                 let git_opt = {
                     url:git_url,
                     responsetype:'json',
@@ -114,17 +116,18 @@ var oAuth = (code, type) => {
                             method:'get'
                         }
                         Axios(option).then((result) => {
-                            let time = moment().format();
+                            let time = moment().format()
                             let info = result.data
                             let query = {
                                 nickname:info.login,
                                 avatar:info.avatar_url,
                                 oauthid:info.id,
-                                addtime:time
+                                addtime:time,
+                                from:'github'
                             }
                             oAuthModel.find({'oauthid':info.id})
                             .lean()
-                            .exec( (err,res) => {
+                            .exec((err,res) => {
                                 if (res != "") {
                                     resolve(res)
                                 } else {
@@ -149,7 +152,22 @@ var oAuth = (code, type) => {
     })
 }
 
-module.exports.log = log;
-module.exports.signup = signup;
-module.exports.editAuth = editAuth;
-module.exports.oAuth = oAuth;
+var oAuthList = () => {
+    return new Promise(resolve => {
+        oAuthModel.find()
+        .lean()
+        .exec((err,res) => {
+            if (res != "") {
+                resolve(res)
+            } else {
+                resolve(err)
+            }
+        })
+    })
+}
+
+module.exports.log = log
+module.exports.signup = signup
+module.exports.editAuth = editAuth
+module.exports.oAuth = oAuth
+module.exports.oAuthList = oAuthList

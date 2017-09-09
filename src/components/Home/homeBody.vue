@@ -12,15 +12,14 @@
           </div>
           <div class="pull-left article-type">
             <i class="glyphicon glyphicon-tags"></i>
-            <span v-for="type in item.types">
+            <span v-for="(type, index) in item.types">
               <router-link :to="type">{{ type }}</router-link>
             </span>
           </div>
           <div class="pull-right">
-            <router-link :to="'/home/article/' + item._id">
-            <i class="glyphicon glyphicon-fullscreen"></i>
-              查看全文
-            </router-link>
+            <mu-icon-button tag='a' :to="'/home/article/' + item._id" >
+              <i class="fa fa-search-plus"></i>
+            </mu-icon-button>
           </div>
         </div>
       </li>

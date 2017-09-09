@@ -6,7 +6,6 @@ import 'muse-ui/dist/muse-ui.css'
 import 'element-ui/lib/theme-default/index.css'
 import './assets/styles/index.css'
 import './assets/styles/markdown.css'
-import './assets/styles/font-awesome-4.7.0/css/font-awesome.min.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'animate.css'
 import VueRouter from 'vue-router'
@@ -61,6 +60,14 @@ const router = new VueRouter({
               component: resolve => require(['./components/admin/settings/userInfo'], resolve)
             }
           ]
+        },
+        {
+          path: 'oAuth',
+          component: resolve => require(['./components/admin/oAuth'], resolve)
+        },
+        {
+          path: 'comments',
+          component: resolve => require(['./components/admin/comments'], resolve)
         }
       ]
     },
@@ -90,6 +97,11 @@ const router = new VueRouter({
           component: resolve => require(['./components/Archive/index'], resolve)
         }
       ]
+    },
+    {
+      path: '/callback',
+      name: 'callback',
+      component: resolve => require(['./components/common/callback'], resolve)
     }
   ]
 })
@@ -99,13 +111,15 @@ router.beforeEach((to, from, next) => {
   const token = sessionStorage.getItem('token')
   let code = to.query.code
   let type = to.query.type
-  if (code !== undefined) {
+  let arr = ['github', 'weibo']
+  if (code !== undefined && arr.includes(type)) {
     Axios.get('/auth/oAuth/' + code + '/' + type)
     .then((res) => {
       if (res.data.sta) {
         window.sessionStorage.setItem('userSession', JSON.stringify(res.data.info[0]))
+        let id = sessionStorage.getItem('current_article_id')
         next({
-          path: '/home/article'
+          path: '/home/article/' + id
         })
       } else {
         next()
@@ -128,19 +142,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
-  // if (to.path === '/') {
-  //   if (token !== 'null' && token != null) {
-  //     next('/todolist')
-  //   }
-  //   next()
-  // } else {
-  //   if (token !== 'null' && token != null) {
-  //     Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token
-  //     next()
-  //   } else {
-  //     next('/')
-  //   }
-  // }
 })
 
 new Vue({

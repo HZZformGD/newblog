@@ -103,7 +103,7 @@ var addArticles = async (ctx, next) => {
     let title = ctx.request.body.title
     let content = ctx.request.body.content
     let sourceContent = ctx.request.body.sourceContent
-    let date = moment()
+    let date = moment().locale('zh-cn')
     let createTime = date.format()
     let createYear = date.year()
     let createMonth = date.month()+1

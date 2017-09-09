@@ -6,8 +6,10 @@ const commentsSchema = new mongoose.Schema(
         commerId: {type:mongoose.Schema.Types.ObjectId,ref:'oauth'},
         to_id: {type:mongoose.Schema.Types.ObjectId,ref:'oauth'},
         replay_comment: String,
-        articleId: mongoose.Schema.Types.ObjectId,
-        time: Date
+        articleId: {type:mongoose.Schema.Types.ObjectId,ref:'articles'},
+        time: Date,
+        isShow: Boolean,
+        isView: Boolean
     },
     {collection:'comments'}
 )

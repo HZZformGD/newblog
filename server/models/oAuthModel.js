@@ -8,7 +8,8 @@ const mySchema=new mongoose.Schema(
         nickname:String,
         oauthid:Number,
         avatar:String,
-        addtime:Date
+        addtime:Date,
+        from:String
     },
         {collection:'oauth'}
 );

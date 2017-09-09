@@ -65,11 +65,10 @@ var addArchive = function (title, createTime, createYear, createMonth, id) {
     let schema = {
         title: title,
         time: createTime,
-        createdYear: createYear,
-        createdMonth: createMonth,
+        createYear: createYear,
+        createMonth: createMonth,
         aid: id
     }
-    console.log(schema)
     let add = new archive(schema)
     return new Promise(resolve => {
         add.save(function (err, res) {
