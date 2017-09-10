@@ -33,7 +33,7 @@ export default {
       skip: 0,
       limit: 3,
       tourist: 'http://wx4.sinaimg.cn/mw690/beb8586fgy1fgm02f5jxzg208w08wqv6.gif',
-      nowId: JSON.parse(window.sessionStorage.getItem('userSession'))._id
+      nowId: JSON.parse(window.sessionStorage.getItem('userSession'))
     }
   },
   computed: mapState({

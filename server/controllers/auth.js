@@ -15,7 +15,7 @@ var log = async (ctx, next) => {
         if (bcrypt.compareSync(Password, data[0].password)) {
             const userToken = {
                 account: data[0].account,
-                id: data[0]._id
+                _id: data[0]._id
             }
             const secret = 'vue-koa-demo';
             const token = jwt.sign(userToken, secret);

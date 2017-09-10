@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="backstage-main">
     <div class="chat">
-      <chat :nowId="nowId" :tourist="userInfo.avatar" :isAdmin="userInfo.avatar"></chat>
+      <chat :nowId="userInfo" :tourist="userInfo.avatar" :isAdmin="userInfo.avatar"></chat>
     </div>
     <div class="left-module col-sm-2 hidden-xs">
       <div class="logo">
@@ -147,7 +147,7 @@ export default {
 <style lang="css">
 .chat {
   position:fixed;
-  top:30px;
+  top:100px;
   z-index:102;
   right:0px;
   width:500px;

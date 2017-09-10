@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!Object.is(nowId, 0)" class="canChat">
+    <div v-if="!Object.is(nowId._id, 0)" class="canChat">
         <div v-show="toggle" class="button">
             <mu-icon-button icon=":fa fa-android faa-shake animated big" size=30 tooltip="尝试和博主聊天？" tooltipPosition="bottom-left" @click="change"/>
         </div>
@@ -7,12 +7,11 @@
             <div class="card">
                 <mu-card>
                 <mu-icon-button icon=":fa fa-close" class="close" @click="change()"/>
-                <mu-card-header >
-                  <mu-avatar :src="tourist ? tourist : message[0].avatar"  slot="avatar"/>
-                </mu-card-header>
                 <div class="content">
                   <div class="item" v-for="(item, index) in message">
-                    <mu-card-text   :class="item.reply_id === nowId ? 'reply' : 'author'">
+                    <mu-card-text  :class="item.reply_id === nowId._id ? 'reply' : 'author'">
+                    <span class="name">啊啥都加速度</span>
+                    <mu-avatar  :src="item.avatar"/>
                     <span class="time">{{ item.time }}</span>
                     {{ item.reply_words }}
                     </mu-card-text>
@@ -42,10 +41,23 @@ export default {
     }
   },
   computed: {
+    admin () {
+      var mess = this.message
+      let data
+      for (var item of mess) {
+        if (!Object.is(item.reply_id, '59321aa8a2f622dfa0121015')) {
+          data = item
+        }
+      }
+      return data
+    }
   },
   watch: {
     message (val) {
         window.sessionStorage.setItem('message', JSON.stringify(val))
+    },
+    height (val) {
+
     }
   },
   mounted () {
@@ -61,9 +73,10 @@ export default {
       if (this.isAdmin) {
         data = {
           'reply_words': this.words,
-          'reply_id': this.nowId,
+          'reply_id': this.nowId._id,
           'time': time,
-          'avatar': this.isAdmin
+          'avatar': this.isAdmin,
+          'name': this.nowId.name
         }
       } else {
         let sessoin = JSON.parse(window.sessionStorage.getItem('userSession'))
@@ -71,7 +84,8 @@ export default {
           'reply_words': this.words,
           'reply_id': sessoin._id,
           'time': time,
-          'avatar': sessoin.avatar
+          'avatar': sessoin.avatar,
+          'name': sessoin.nickname
         }
       }
       socket.emit('chat message', data)
@@ -85,12 +99,18 @@ export default {
 </script>
 
 <style scoped>
+  .name {
+    display: block;
+    color:purple;
+    font-size: 12px;
+  }
   .time {
     font-size: 12px;
-    color:coral;
+    color: coral;
+    display: block;
   }
   .reply {
-      color:#e3dd33;
+      color:black;
       text-align: right;
   }
   .close {
@@ -109,7 +129,7 @@ export default {
       font-size: 50px;
   }
   .content{
-      height: 400px;
+      height: 250px;
       overflow-y: auto;
   }
 </style>
