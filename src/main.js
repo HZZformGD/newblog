@@ -11,10 +11,12 @@ import 'animate.css'
 import VueRouter from 'vue-router'
 import store from './store/index'
 import Axios from 'axios'
+import moment from 'moment'
 
 Vue.use(MuseUI)
 Vue.use(ElementUI)
 Vue.use(VueRouter)
+Vue.prototype.moment = moment
 
 const router = new VueRouter({
   mode: 'history',

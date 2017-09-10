@@ -2,6 +2,9 @@
   <div>
     <headerComponent></headerComponent>
     <minHeader v-once></minHeader>
+    <div class="chat">
+      <chat></chat>
+    </div>
     <transition
       name="custom-classes-transition"
       enter-active-class="animated fadeIn"
@@ -22,6 +25,7 @@ import minHeader from '../common/carvas'
 import UserInfo from '../common/UserInfo'
 import FooterComponent from '../common/footer'
 import Pager from '../common/pager'
+import chat from '../common/chat'
 import { mapState } from 'vuex'
 export default {
   data () {
@@ -62,7 +66,18 @@ export default {
     minHeader,
     UserInfo,
     Pager,
-    FooterComponent
+    FooterComponent,
+    chat
   }
 }
 </script>
+
+<style scoped>
+  .chat {
+    width: 500px;
+    position: fixed;
+    right:0;
+    top:30%;
+    z-index:90;
+  }
+</style>
