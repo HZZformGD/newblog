@@ -12,6 +12,7 @@ const state = {
   currUpdateArticle: {},
   pagerIsShow: true,
   isEditArticle: false,
+  isReplay: false,
   articlesTotal: 0,
   articleDetails: {},
   userInfo: '',
@@ -27,7 +28,8 @@ const state = {
   usersession: '',
   comments: '',
   unviewCommentsCount: 0,
-  oAuthList: ''
+  oAuthList: '',
+  editReply: ''
 }
 
 const getters = {

@@ -105,6 +105,10 @@ export default {
   },
   [types.OAUTHLIST] (state, oAuthList) {
     state.oAuthList = oAuthList
+  },
+  [types.REPLYIT] (state, index) {
+    state.editReply = state.comments[index]
+    state.isReplay = true
   }
 }
 

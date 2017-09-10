@@ -77,6 +77,11 @@ export default {
           text: 'oAuth评论',
           path: '/admin/comments',
           icon: 'fa fa-commenting-o'
+        },
+        {
+          text: '回复评论',
+          path: '/admin/reply',
+          icon: 'fa fa-edit'
         }
       ],
       viewClass: 'fa fa-bell faa-ring animated View'

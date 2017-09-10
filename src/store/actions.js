@@ -314,5 +314,8 @@ export default {
         }
       })
     })
+  },
+  replyIt ({ commit }, index) {
+    commit(types.REPLYIT, index)
   }
 }

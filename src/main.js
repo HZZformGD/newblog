@@ -68,6 +68,10 @@ const router = new VueRouter({
         {
           path: 'comments',
           component: resolve => require(['./components/admin/comments'], resolve)
+        },
+        {
+          path: 'reply',
+          component: resolve => require(['./components/admin/reply'], resolve)
         }
       ]
     },

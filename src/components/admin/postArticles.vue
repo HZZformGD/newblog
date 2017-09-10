@@ -41,7 +41,7 @@ export default {
   methods: {
     clear () {
       this.$store.state.editArticle = {}
-      this.$store.state.templateArticle = {}
+      this.$store.state.tempArticle = {}
     },
     async add () {
       let data = this.tempArticle

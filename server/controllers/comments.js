@@ -6,17 +6,26 @@ var insert = async (ctx, next) => {
   let date = moment().locale('zh-cn')
   let time = date.format()
   let to_id= ctx.request.body.to_id
+  let commerId = ctx.request.body.commerId
+  if (Object.is(commerId, '13075210743')) {
+    commerId = '59321aa8a2f622dfa0121015'
+  }
+  let show = true,
+      view = false
+  if (Object.is(commerId, '59321aa8a2f622dfa0121015')) {
+    show = true,
+    view = true
+  }
   let data = {
-    'commerId': ctx.request.body.commerId,
+    'commerId': commerId,
     'to_id':  to_id,
     'replay_comment': ctx.request.body.replay_comment,
     'articleId': ctx.request.body.articleId,
     'time':time,
-    'isShow':true,
-    'isView':false
+    'isShow':show,
+    'isView':view
   }
   let res = await comments.insert(data)
-  console.log(res)
   if (res != '') {
     ctx.response.type = 'application/json'
     ctx.response.body = {
