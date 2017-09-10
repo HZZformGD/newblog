@@ -21,6 +21,9 @@
           </a>
           <i class="glyphicon glyphicon-off mrgL30" @click="signOut"></i>
         </div>
+        <div class="music">
+          <musicPlayer :right="right"></musicPlayer>
+        </div>
         <div class="pull-right">
           <figure>
             <figcaption>
@@ -48,6 +51,7 @@
 </template>
 
 <script>
+import musicPlayer from '../common/musicPlayer'
 import moment from 'moment'
 export default {
   data () {
@@ -84,7 +88,8 @@ export default {
           icon: 'fa fa-edit'
         }
       ],
-      viewClass: 'fa fa-bell faa-ring animated View'
+      viewClass: 'fa fa-bell faa-ring animated View',
+      right: true
     }
   },
   computed: {
@@ -125,6 +130,9 @@ export default {
     getUnviewCommentsCount () {
       this.$store.dispatch('getUnviewCommentsCount')
     }
+  },
+  components: {
+    musicPlayer
   }
 }
 </script>
@@ -237,5 +245,10 @@ export default {
   }
   .View:hover,.View:focus{
     cursor: pointer;
+  }
+  .music {
+    position: absolute;
+    top: 13px;
+    left: 170px;
   }
 </style>

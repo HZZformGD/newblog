@@ -1,31 +1,8 @@
-<!--<template lang="html">
-  <div class="musicBox">
-      <div class="boxLeft">
-        <span id="play" :class="icon" @click="play"></span>
-        <img id="cover" class="musicImg" :src="musicImg" alt="">
-      </div>
-      <audio id="audio" :src="musicSrc" ></audio>
-      <div class="boxRight">
-        <el-input icon="search" type="text" placeholder="搜索关键字" @change="search" @key.enter="search" v-model="key"/></el-input>
-        <div class="song">
-          <mu-list class="songList" >
-            <mu-list-item :title="item.name" :key="item.name" @click="click(index)" v-for="(item, index) in songList" >
-              <mu-avatar :src="item.img" slot="leftAvatar"/>
-                <span slot="describe">
-                  <span style="color: rgba(0, 0, 0, .87)">{{ item.author }}</span>
-                </span>
-            </mu-list-item>
-          </mu-list>
-        </div>
-      </div>
-  </div>
-</template>-->
-
 <template>
   <div>
     <audio id="audio" :src="musicSrc" ></audio>
     <mu-float-button mini backgroundColor="#41b131" title="点击后可搜索歌曲哦~" id="cover" icon=":glyphicon glyphicon-music" @click="toggle()" />
-    <mu-drawer :open="open" width="300" :docked="docked" @close="toggle()">
+    <mu-drawer :open="open" width="300" :right="right" :docked="docked" @close="toggle()">
       <mu-list class="scroll" @itemClick="docked ? '' : toggle()">
         <mu-sub-header>
         <mu-text-field  icon=":fa fa-search" label="搜索歌名"  @change="search" @key.enter="search" v-model="key" labelFloat/>
@@ -43,6 +20,7 @@
 
 <script>
 export default {
+  props: ['right'],
   data () {
     return {
       icon: 'glyphicon glyphicon-play',
