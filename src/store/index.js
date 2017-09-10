@@ -39,7 +39,7 @@ const getters = {
   },
   getComments: state => {
     for (var comment of state.comments) {
-      comment.time = moment().locale('zh-cn').calendar(comment.time)
+      comment.time = moment(new Date(comment.time)).locale('zh-cn').calendar()
       if (Object.is(comment.to_id, null)) {
         comment.to_id = {
           '_id': 0,
@@ -52,14 +52,14 @@ const getters = {
   getArchiveList: state => {
     for (var items of state.archive) {
       for (var item of items.articleList) {
-        item.time = moment().locale('zh-cn').calendar(item.time)
+        item.time = moment(new Date(item.time)).locale('zh-cn').calendar()
       }
     }
     return state.archive
   },
   getOAuthList: state => {
     for (var item of state.oAuthList) {
-      item.addtime = moment().locale('zh-cn').calendar(item.addtime)
+      item.addtime = moment(new Date(item.addtime)).locale('zh-cn').calendar()
     }
     return state.oAuthList
   }
