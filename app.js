@@ -12,6 +12,15 @@ const Koa = require('koa'),
     historyApiFallback = require('koa2-history-api-fallback'),
     jwt = require('koa-jwt');
 const app = new Koa();
+const socket = require('http').Server(app.callback());
+const io = require('socket.io')(socket);
+
+io.on('connection', function(socket){
+    socket.on('chat message', function(msg){
+    console.log(msg)
+    io.emit('chat message', msg);
+    });
+});
 
 app.use(bodyParser());
 app.use(json());
@@ -54,5 +63,5 @@ app.use(router.routes())
 app.use(historyApiFallback())
 app.use(server(path.resolve('dist')))
 
-app.listen(8999);
+socket.listen(8999);
 console.log('8999 +' + 'time +' + new Date().toLocaleString() );

@@ -3,7 +3,7 @@
     <headerComponent></headerComponent>
     <minHeader v-once></minHeader>
     <div class="chat">
-      <chat></chat>
+      <chat :tourist="tourist" :nowId="nowId"></chat>
     </div>
     <transition
       name="custom-classes-transition"
@@ -31,7 +31,9 @@ export default {
   data () {
     return {
       skip: 0,
-      limit: 3
+      limit: 3,
+      tourist: 'http://wx4.sinaimg.cn/mw690/beb8586fgy1fgm02f5jxzg208w08wqv6.gif',
+      nowId: JSON.parse(window.sessionStorage.getItem('userSession'))._id
     }
   },
   computed: mapState({
@@ -77,7 +79,7 @@ export default {
     width: 500px;
     position: fixed;
     right:0;
-    top:30%;
+    top:100px;
     z-index:90;
   }
 </style>

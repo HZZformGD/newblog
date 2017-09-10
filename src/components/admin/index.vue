@@ -1,5 +1,8 @@
 <template lang="html">
   <div class="backstage-main">
+    <div class="chat">
+      <chat :nowId="nowId" :tourist="userInfo.avatar" :isAdmin="userInfo.avatar"></chat>
+    </div>
     <div class="left-module col-sm-2 hidden-xs">
       <div class="logo">
         欢迎进入博客后台
@@ -27,9 +30,9 @@
         <div class="pull-right">
           <figure>
             <figcaption>
-              {{ getTime }}好，{{ userInfo.account.name }} ~
+              {{ getTime }}好，{{ userInfo.name }} ~
             </figcaption>
-            <img :src="userInfo.account.avatar"/>
+            <img :src="userInfo.avatar"/>
             <i v-if="!Object.is(count, 0)" :class="viewClass" @click="viewed">未读消息</i>
             <el-badge  :value="count" :max="10" class="item">
             </el-badge>
@@ -53,6 +56,8 @@
 <script>
 import musicPlayer from '../common/musicPlayer'
 import moment from 'moment'
+import chat from '../common/chat'
+
 export default {
   data () {
     return {
@@ -89,12 +94,13 @@ export default {
         }
       ],
       viewClass: 'fa fa-bell faa-ring animated View',
-      right: true
+      right: true,
+      nowId: '59321aa8a2f622dfa0121015'
     }
   },
   computed: {
     userInfo () {
-      return this.$store.state.token
+      return this.$store.state.token.account
     },
     getTime () {
       return moment().locale('zh-cn').format('a')
@@ -132,12 +138,20 @@ export default {
     }
   },
   components: {
-    musicPlayer
+    musicPlayer,
+    chat
   }
 }
 </script>
 
 <style lang="css">
+.chat {
+  position:fixed;
+  top:30px;
+  z-index:102;
+  right:0px;
+  width:500px;
+}
 .backstage-main {
     position: absolute;
     top:0;

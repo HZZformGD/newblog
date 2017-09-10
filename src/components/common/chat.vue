@@ -1,36 +1,22 @@
 <template>
-    <div v-if="!Object.is(islog._id, 0)" class="canChat">
-        <div v-if="toggle" class="button">
+    <div v-if="!Object.is(nowId, 0)" class="canChat">
+        <div v-show="toggle" class="button">
             <mu-icon-button icon=":fa fa-android faa-shake animated big" size=30 tooltip="尝试和博主聊天？" tooltipPosition="bottom-left" @click="change"/>
         </div>
-        <div v-if="!toggle" class="window">
+        <div v-show="!toggle" class="window">
             <div class="card">
                 <mu-card>
                 <mu-icon-button icon=":fa fa-close" class="close" @click="change()"/>
                 <mu-card-header >
-                  <mu-avatar  slot="avatar"/>
+                  <mu-avatar :src="tourist ? tourist : message[0].avatar"  slot="avatar"/>
                 </mu-card-header>
                 <div class="content">
-                    <mu-card-text class="author">
-                    <span class="time">今天早上10:00:</span>
-                    <span>你好啊啊啊啊</span>
+                  <div class="item" v-for="(item, index) in message">
+                    <mu-card-text   :class="item.reply_id === nowId ? 'reply' : 'author'">
+                    <span class="time">{{ item.time }}</span>
+                    {{ item.reply_words }}
                     </mu-card-text>
-                    <mu-card-text class="reply">
-                    <span class="time">今天早上10:00:</span>
-                    <span>你好啊啊啊啊</span>
-                    </mu-card-text>
-                    <mu-card-text class="reply">
-                    <span class="time">今天早上10:00:</span>
-                    <span>你好啊啊啊啊</span>
-                    </mu-card-text>
-                    <mu-card-text class="reply">
-                    <span class="time">今天早上10:00:</span>
-                    <span>你好啊啊啊啊</span>
-                    </mu-card-text>
-                    <mu-card-text class="reply">
-                    <span class="time">今天早上10:00:</span>
-                    <span>你好啊啊啊啊</span>
-                    </mu-card-text>
+                  </div>
                 </div>
                 <mu-text-field hintText="写点东西吧···" v-model="words" label="点击这里~" ref="content" class="replyInput" :underlineShow="underlineShow" multiLine :rows="3" fullWidth labelFloat/>
                 <mu-card-actions>
@@ -46,41 +32,47 @@
 
 <script>
 export default {
+  props: ['tourist', 'nowId', 'isAdmin'],
   data () {
     return {
       toggle: true,
       words: '',
       underlineShow: false,
-      msgList: []
+      message: JSON.parse(window.sessionStorage.getItem('message')) || []
     }
   },
-  computed : {
-    islog () {
-        if (window.sessionStorage.getItem('userSession')) {
-            return JSON.parse(window.sessionStorage.getItem('userSession'))
-        } else {
-            let data = {
-                '_id': 0
-            }
-            return data
-        }
+  computed: {
+  },
+  watch: {
+    message (val) {
+        window.sessionStorage.setItem('message', JSON.stringify(val))
     }
   },
   mounted () {
+    var vm = this
     socket.on('chat message', function(msg){
-      const self=this
-      console.log(self.msgList)
-      console.log(msg)
+      vm.message.push(msg)
     })
   },
   methods: {
     reply () {
-      let sessoin = JSON.parse(window.sessionStorage.getItem('userSession'))
-      let time = this.moment().format('YYYY-MM-DD HH:mm:ss')
-      let data = {
-        'reply_words': this.words,
-        'reply_id': sessoin._id,
-        'time': time
+      let data
+      let time = this.moment().format('HH:mm:ss')
+      if (this.isAdmin) {
+        data = {
+          'reply_words': this.words,
+          'reply_id': this.nowId,
+          'time': time,
+          'avatar': this.isAdmin
+        }
+      } else {
+        let sessoin = JSON.parse(window.sessionStorage.getItem('userSession'))
+        data = {
+          'reply_words': this.words,
+          'reply_id': sessoin._id,
+          'time': time,
+          'avatar': sessoin.avatar
+        }
       }
       socket.emit('chat message', data)
       this.words = ''
@@ -98,6 +90,7 @@ export default {
     color:coral;
   }
   .reply {
+      color:#e3dd33;
       text-align: right;
   }
   .close {
