@@ -1,6 +1,6 @@
 <template>
   <div>
-    <audio id="audio" :src="musicSrc" ></audio>
+    <audio id="audio" ref="audio" :src="musicSrc" @ended="end"></audio>
     <mu-float-button mini backgroundColor="#41b131" title="点击后可搜索歌曲哦~" id="cover" icon=":glyphicon glyphicon-music" @click="toggle()" />
     <mu-drawer :open="open" width="300" :right="right" :docked="docked" @close="toggle()">
       <mu-list class="scroll" @itemClick="docked ? '' : toggle()">
@@ -52,7 +52,7 @@ export default {
       if (this.musicSrc) {
         this.isPlay = !this.isPlay
       }
-      var cover = document.getElementById('cover')
+      let cover = document.getElementById('cover')
       let audio = document.getElementById('audio')
       if (this.isPlay) {
         cover.style.animation = 'rotate 10s infinite linear'
@@ -79,6 +79,13 @@ export default {
         cover.style.animation = false
         audio.pause()
       }
+    },
+    end () {
+      this.play()
+      this.$message({
+        type: 'success',
+        message: '该歌曲已经播放完了~可以继续搜索喜欢的歌曲'
+      })
     }
   }
 }
