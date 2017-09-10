@@ -14,8 +14,16 @@
       <mu-tr v-for="(item, index) in list"  :key="item._id">
         <mu-td>{{ item.commerId.nickname }}</mu-td>
         <mu-td>{{ item.to_id.nickname }}</mu-td>
+<<<<<<< HEAD
         <mu-td>{{ item.replay_comment }}</mu-td>
         <mu-td>{{ item.articleId.title }}</mu-td>
+=======
+        <mu-td > 
+          <span class="content">{{ item.replay_comment }}</span>
+        </mu-td>
+        <mu-td>
+          <span class="content">{{ item.articleId.title }}</span></mu-td>
+>>>>>>> origin/master
         <mu-td>{{ item.time }}</mu-td>
         <mu-td>
             <mu-switch v-model="item.isShow" class="demo-switch" :id="item._id" ref="switch" @change="changeShow(item.isShow, item._id)"/>
@@ -63,5 +71,14 @@ export default {
 </script>
 
 <style scoped>
+<<<<<<< HEAD
+=======
+.content {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+}
+>>>>>>> origin/master
 
 </style>

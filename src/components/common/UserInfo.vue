@@ -15,7 +15,9 @@
       <div class="col-sm-4">
         <ul class="socail-contact_ul">
           <li v-for="item in socialList" key="item._id">
-            <a :href="item.path" target="_blank"><img :src="item.src" /></a>
+          <mu-icon-button  tooltip="登录" slot="right"  :href="item.path"  class="wei-sign-in"  >
+            <i :class="item.src"></i>
+          </mu-icon-button>
           </li>
         </ul>
       </div>

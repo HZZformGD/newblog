@@ -1,6 +1,6 @@
 <template>
   <div class="archive-list col-xs-8 col-xs-offset-2">
-    <Timeline v-for='(item, index) in archiveList' :item="item" :key="index" :year="item[0]._id" :articleList="item[0].articleList">
+    <Timeline v-for='(item, index) in archiveList' :item="item" :key="index" :year="item._id" :articleList="item.articleList">
     </Timeline>
   </div>
 </template>
