@@ -1,22 +1,24 @@
 <template lang="html">
-  <div>
-    <headerComponent></headerComponent>
-    <minHeader v-once></minHeader>
-    <div class="chat">
-      <chat :tourist="tourist" :nowId="nowId"></chat>
+  <vue-scrollbar classes="s_bar" ref="s_bar">
+    <div ref="total_height">
+      <headerComponent></headerComponent>
+      <minHeader v-once></minHeader>
+      <div class="chat">
+        <chat :tourist="tourist" :nowId="nowId"></chat>
+      </div>
+      <transition
+        name="custom-classes-transition"
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeInOut">
+        <router-view></router-view>
+      </transition>
+      <div class="col-xs-8 col-xs-offset-2">
+        <Pager :limit='limit'></Pager>
+      </div>
+      <UserInfo :userInfo="userInfo" :socialList="socialList"></UserInfo>
+      <FooterComponent></FooterComponent>
     </div>
-    <transition
-      name="custom-classes-transition"
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeInOut">
-      <router-view></router-view>
-    </transition>
-    <div class="col-xs-8 col-xs-offset-2">
-      <Pager :limit='limit'></Pager>
-    </div>
-    <UserInfo :userInfo="userInfo" :socialList="socialList"></UserInfo>
-    <FooterComponent></FooterComponent>
-  </div>
+  </vue-scrollbar>
 </template>
 
 <script>
@@ -26,6 +28,8 @@ import UserInfo from '../common/UserInfo'
 import FooterComponent from '../common/footer'
 import Pager from '../common/pager'
 import chat from '../common/chat'
+import VueScrollbar from 'vue2-scrollbar';
+import scrollbar from 'vue2-scrollbar/dist/style/vue2-scrollbar.css'
 import { mapState } from 'vuex'
 export default {
   data () {
@@ -69,7 +73,8 @@ export default {
     UserInfo,
     Pager,
     FooterComponent,
-    chat
+    chat,
+    VueScrollbar
   }
 }
 </script>
@@ -81,5 +86,8 @@ export default {
     right:0;
     top:100px;
     z-index:90;
+  }
+  .s_bar{
+    height:100%;
   }
 </style>

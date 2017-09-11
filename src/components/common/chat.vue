@@ -7,16 +7,18 @@
             <div class="card">
                 <mu-card>
                 <mu-icon-button icon=":fa fa-close" class="close" @click="change()"/>
-                <div id="content">
-                  <div class="item" v-for="(item, index) in message" :key="item.reply_id">
-                    <mu-card-text  :class="item.reply_id === nowId._id ? 'reply' : 'author'">
-                    <span class="name">{{ item.name }}</span>
-                    <mu-avatar  :src="item.avatar"/>
-                    <span class="time">{{ item.time }}</span>
-                    {{ item.reply_words }}
-                    </mu-card-text>
+                <vue-scrollbar classes="my-scrollbar" ref="Scrollbar">
+                  <div id="content">
+                    <div class="item" v-for="(item, index) in message" :key="item.reply_id">
+                      <mu-card-text  :class="item.reply_id === nowId._id ? 'reply' : 'author'">
+                      <span class="name">{{ item.name }}</span>
+                      <mu-avatar  :src="item.avatar"/>
+                      <span class="time">{{ item.time }}</span>
+                      {{ item.reply_words }}
+                      </mu-card-text>
+                    </div>
                   </div>
-                </div>
+                </vue-scrollbar>
                 <mu-text-field hintText="写点东西吧···" @keyup.native.enter="reply" v-model="words" label="点击这里~" ref="content" class="replyInput" :underlineShow="underlineShow" multiLine :rows="3" fullWidth labelFloat/>
                 <mu-card-actions>
                   <mu-flat-button icon=":fa fa-reply" label="回复" @click="reply()"/>
@@ -30,6 +32,9 @@
 </template>
 
 <script>
+import VueScrollbar from 'vue2-scrollbar';
+import scrollbar from 'vue2-scrollbar/dist/style/vue2-scrollbar.css'
+
 export default {
   props: ['tourist', 'nowId', 'isAdmin'],
   data () {
@@ -54,17 +59,20 @@ export default {
   },
   watch: {
     message (val) {
-        window.sessionStorage.setItem('message', JSON.stringify(val))
+      window.sessionStorage.setItem('message', JSON.stringify(val))
     }
   },
   mounted () {
     var vm = this
-    vm.box = document.getElementById('content')
+
     socket.on('chat message', (msg) => {
       vm.message.push(msg)
-      setTimeout( () => {
-        vm.box.scrollTop = vm.box.scrollHeight
-      },300)
+      console.log('first ', document.querySelectorAll('.item').length)
+      setTimeout(() => {
+        let _height = document.querySelectorAll('.item').length * 130
+        this.$refs.Scrollbar.scrollToY(_height)
+        console.log('se ', document.querySelectorAll('.item').length)
+      },400)
     })
   },
   methods: {
@@ -95,7 +103,11 @@ export default {
     change () {
       this.toggle = !this.toggle
     }
+  },
+  components: {
+    VueScrollbar
   }
+  
 }
 </script>
 
@@ -126,11 +138,13 @@ export default {
       float: right;
       color: #84c57c;
   }
-  .big{
+  .big {
       font-size: 50px;
   }
-  #content{
-      height: 250px;
-      overflow-y: auto;
+  .my-scrollbar {
+      max-height: 250px;
+  }
+  #content {
+    min-height:250px;
   }
 </style>
