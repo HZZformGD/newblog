@@ -45,7 +45,7 @@ const getters = {
       if (Object.is(comment.to_id, null)) {
         comment.to_id = {
           '_id': 0,
-          'nickname': ''
+          'nickname': ' '
         }
       }
     }

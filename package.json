@@ -38,13 +38,13 @@
     "music-api": "^0.3.1",
     "net": "^1.0.2",
     "simplemde": "^1.11.2",
+    "socket.io": "^2.0.3",
     "vue": "^2.3.3",
     "vue-router": "^2.3.1",
-    "vuex": "^2.3.1",
-    "socket.io": "^1.7.3"
+    "vuex": "^2.3.1"
   },
   "devDependencies": {
-    "socket.io": "^1.7.3",
+    "socket.io": "^2.0.3",
     "autoprefixer": "^6.7.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",

@@ -156,6 +156,7 @@ var oAuthList = () => {
     return new Promise(resolve => {
         oAuthModel.find()
         .lean()
+        .sort({ addtime: 1 })
         .exec((err,res) => {
             if (res != "") {
                 resolve(res)

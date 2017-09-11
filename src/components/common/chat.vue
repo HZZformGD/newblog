@@ -8,9 +8,9 @@
                 <mu-card>
                 <mu-icon-button icon=":fa fa-close" class="close" @click="change()"/>
                 <div class="content">
-                  <div class="item" v-for="(item, index) in message">
+                  <div class="item" v-for="(item, index) in message" :key="item">
                     <mu-card-text  :class="item.reply_id === nowId._id ? 'reply' : 'author'">
-                    <span class="name">啊啥都加速度</span>
+                    <span class="name">{{ item.name }}</span>
                     <mu-avatar  :src="item.avatar"/>
                     <span class="time">{{ item.time }}</span>
                     {{ item.reply_words }}
