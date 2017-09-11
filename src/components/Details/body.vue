@@ -14,20 +14,20 @@
             <span class="commentTime">{{ item.time }}</span>
           </span>
           <mu-icon slot="right" v-if="!(item.commerId._id === getUserInfoSession._id || getUserInfoSession._id ===0)" value=":fa fa-reply" tooltip="回复" @click="showReply(item._id)"/>
-          <mu-text-field :id="'field_'+item._id" class="noShow" hintText="回复些什么好呢" v-model="reply_words" fullWidth  multiLine :rows="3" :rowsMax="6"/>
+          <mu-text-field :id="'field_'+item._id" class="noShow" hintText="回复些什么好呢" @keyup.native.enter="reply(item._id, item.commerId._id)" v-model="reply_words" fullWidth  multiLine :rows="3" :rowsMax="6"/>
           <mu-flat-button :id="'reply_'+item._id" class="noShow" label="回复" icon=":fa fa-android" @click="reply(item._id, item.commerId._id)" primary/>
         </mu-list-item>
       </mu-list>
     </div>
     <div class="input_area">
-      <mu-text-field v-model="input_words" :disabled="(getUserInfoSession._id === 0)" label="留下你的脚印~~" fullWidth icon=":fa fa-commenting-o"  multiLine :rows="6" labelFloat/>
+      <mu-text-field v-model="input_words" :disabled="(getUserInfoSession._id === 0)" @keyup.native.enter="comments" label="留下你的脚印~~" fullWidth icon=":fa fa-commenting-o"  multiLine :rows="6" labelFloat/>
       <mu-icon-button v-if="(getUserInfoSession._id === 0)" tooltip="github登录" slot="right"  href="https://github.com/login/oauth/authorize?client_id=37169fc792fb75ef71b3&state=1994&redirect_uri=http://127.0.0.1:8090/callback?type=github"  class="git-sign-in"  >
         <i class="fa fa-github-alt faa-ring animated"></i>
       </mu-icon-button>
       <mu-icon-button v-if="(getUserInfoSession._id === 0)" tooltip="微博登录" slot="right"  href="https://api.weibo.com/oauth2/authorize?client_id=3328252567&response_type=code&redirect_uri=http://www.huangzhenzhan.club/callback?type=weibo"  class="wei-sign-in"  >
         <i class="fa fa-weibo faa-ring animated"></i>
       </mu-icon-button>
-      <mu-raised-button v-if="(getUserInfoSession._id !== 0)" class="comments" @click="comments"  label="发表" icon=":fa fa-comments" primary/>
+      <mu-raised-button v-if="(getUserInfoSession._id !== 0)" class="comments"  @click="comments"  label="发表" icon=":fa fa-comments" primary/>
       <div class="info" v-if="(getUserInfoSession._id !== 0)">
         <mu-list-item :title="getUserInfoSession.nickname" disabled>
           <mu-avatar slot="left" :src="getUserInfoSession.avatar"/>

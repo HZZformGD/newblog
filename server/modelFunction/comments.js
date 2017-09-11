@@ -80,8 +80,22 @@ var ViewedComments = () => {
   })
 }
 
+var delComment = (id) => {
+  return new Promise(resolve => {
+    comments.findByIdAndRemove(id, (err, res) => {
+      if (res) {
+        resolve(res)
+      } else {
+        console.log(err)
+        resolve(false)
+      }
+    })
+  })
+}
+
 module.exports.insert = insert
 module.exports.commentsList = commentsList
 module.exports.changeShow = changeShow
 module.exports.getUnViewComments = getUnViewComments
 module.exports.ViewedComments = ViewedComments
+module.exports.delComment = delComment

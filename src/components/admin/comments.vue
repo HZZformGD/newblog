@@ -9,6 +9,7 @@
         <mu-th>评论时间</mu-th>
         <mu-th>是否显示</mu-th>
         <mu-th>回复他</mu-th>
+        <mu-th>删除</mu-th>
       </mu-tr>
     </mu-thead>
     <mu-tbody class="list">
@@ -26,6 +27,9 @@
         </mu-td>
         <mu-td>
             <mu-icon-button v-if="!Object.is(item.commerId._id, '59321aa8a2f622dfa0121015')" icon=":fa fa-reply" @click="replyIt(index)"/>
+        </mu-td>
+        <mu-td>
+            <mu-icon-button  icon=":fa fa-trash-o" @click="delIt(item._id)"/>
         </mu-td>
       </mu-tr>
     </mu-tbody>
@@ -69,6 +73,25 @@ export default {
     replyIt (index) {
       this.$store.dispatch('replyIt', index)
       this.$router.push({path: '/admin/reply'})
+    },
+    delIt (id) {
+      let data = {
+        'id': id
+      }
+      this.$confirm('是否要删除本条评论', '警告！！', {
+        confirmButtonText: '确定',
+        cancelButtonText: '返回',
+        type: 'warning'
+      }).then(async () => {
+        let res = await this.$store.dispatch('delIt', data)
+        if (Object.is(true, res)) {
+          this.$message({
+            type: 'success',
+            message: '删除成功'
+          })
+          this.comments()
+        }
+      })
     }
   }
 }

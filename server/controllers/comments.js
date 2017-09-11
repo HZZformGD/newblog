@@ -124,10 +124,29 @@ var ViewedComments = async (ctx, next) => {
   }
 }
 
+var delComment = async (ctx, next) => {
+  let id = ctx.request.body.id
+  let res = await comments.delComment(id)
+  if (res !== '' && res !== null) {
+    ctx.response.type = 'application/json'
+    ctx.response.body = {
+      sta: true,
+      info: '删除成功'
+    }
+  } else {
+    ctx.response.type = 'application/json'
+    ctx.response.body = {
+      sta: false,
+      info: '出错了'
+    }
+  }
+}
+
 module.exports = {
   insert,
   getcommentsList,
   changeShow,
   getUnViewComments,
-  ViewedComments
+  ViewedComments, 
+  delComment
 }

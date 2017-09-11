@@ -30,4 +30,5 @@ router.post('/changeShow', comments.changeShow)
 router.get('/getUnViewComments', comments.getUnViewComments)
 router.get('/ViewedComments', comments.ViewedComments)
 router.get('/oAuthList', auth.oAuthList)
+router.post('/delComment', comments.delComment)
 module.exports = router

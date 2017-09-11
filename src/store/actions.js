@@ -4,7 +4,7 @@ import * as types from './mutation-type.js'
 export default {
   login ({ commit }, userInfo) {
     return Axios.post('/auth/log', userInfo).then((res) => {
-      if (res.data.sta) {
+      if (Object.is(true, res.data.sta)) {
         commit(types.LOGIN, res.data)
       }
     }, (err) => {
@@ -20,7 +20,7 @@ export default {
     var limit = options.limit
     var skip = options.skip
     Axios.get('/blog_api/getArticles/' + limit + '/' + skip).then((res) => {
-      if (res.data.sta) {
+      if (Object.is(true, res.data.sta)) {
         var ArticleList = res.data
         commit(types.GETARTICLE, ArticleList)
       }
@@ -32,7 +32,7 @@ export default {
   },
   getUserInfo ({ commit }) {
     Axios.get('/blog_api/getUserInfo').then((res) => {
-      if (res.data.sta) {
+      if (Object.is(true, res.data.sta)) {
         var UserInfo = res.data.info
         commit(types.GETUSERINFO, UserInfo)
       }
@@ -45,7 +45,7 @@ export default {
   editUserInfo ({ commit }, data) {
     return new Promise(resolve => {
       Axios.post('/blog_api/editUserInfo', data).then((res) => {
-        if (res.data.sta) {
+        if (Object.is(true, res.data.sta)) {
           commit(types.EDITUSERINFO, res.data.info)
           resolve(res.data.sta)
         } else {
@@ -63,7 +63,7 @@ export default {
   },
   getArticleDetails ({ commit }, id) {
     Axios.get('/blog_api/getArticleDetails/' + id).then((res) => {
-      if (res.data.sta) {
+      if (Object.is(true, res.data.sta)) {
         var Details = res.data.info
         commit(types.GETARTICLEDETAILS, Details)
       }
@@ -73,14 +73,14 @@ export default {
     key = key.replace(/\s+/g, '')
     if (key.length !== 0) {
       Axios.get('/blog_api/getArticles/search/' + key + '/' + 3 + '/' + 0).then((res) => {
-        if (res.data.sta) {
+        if (Object.is(true, res.data.sta)) {
           var ArticleList = res.data
           commit(types.SEARCH, ArticleList)
         }
       })
     } else {
       Axios.get('/blog_api/getArticles/' + 3 + '/' + 0).then((res) => {
-        if (res.data.sta) {
+        if (Object.is(true, res.data.sta)) {
           var ArticleList = res.data
           commit(types.GETARTICLE, ArticleList)
         }
@@ -93,7 +93,7 @@ export default {
   },
   getArchive ({ commit }) {
     Axios.get('/blog_api/getArchive').then((res) => {
-      if (res.data.sta) {
+      if (Object.is(true, res.data.sta)) {
         var archiveList = res.data
         commit(types.ARCHIVELIST, archiveList)
       }
@@ -110,7 +110,7 @@ export default {
   addNav ({ commit }, data) {
     return new Promise(resolve => {
       Axios.post('/blog_api/nav/add', data).then((res) => {
-        if (res.data.sta) {
+        if (Object.is(true, res.data.sta)) {
           resolve(res.data.sta)
         } else {
           resolve(false)
@@ -126,7 +126,7 @@ export default {
     let id = [...state.navList][index]._id
     return new Promise(resolve => {
       Axios.get('/blog_api/nav/remove/' + id).then((res) => {
-        if (res.data.sta) {
+        if (Object.is(true, res.data.sta)) {
           resolve(res.data.sta)
         } else {
           resolve(false)
@@ -143,7 +143,7 @@ export default {
       access_token: token
     }
     Axios.post('/verify/verify', obj).then((res) => {
-      if (res.data.sta) {
+      if (Object.is(true, res.data.sta)) {
         var encodeToken = res.data.info
         commit(types.ENCODETOKEN, encodeToken)
       }
@@ -153,7 +153,7 @@ export default {
     return new Promise(resolve => {
       Axios.post('/blog_api/addArticle', data).then((res) => {
         if (res.data.sta === true) {
-          resolve(res.data.sta)
+          resolve(Object.is(true, res.data.sta))
         } else {
           resolve(false)
         }
@@ -170,7 +170,7 @@ export default {
   updateArticle ({ commit }, data) {
     return new Promise(resolve => {
       Axios.post('/blog_api/updateArticle', data).then((res) => {
-        if (res.data.sta === true) {
+        if (Object.is(true, res.data.sta)) {
           commit(types.UPDATEARTICLE)
           resolve(res.data.sta)
         } else {
@@ -187,7 +187,7 @@ export default {
     let id = [...state.articles][index]._id
     return new Promise(resolve => {
       Axios.get('/blog_api/removeArticle/' + id).then((res) => {
-        if (res.data.sta === true) {
+        if (Object.is(true, res.data.sta)) {
           resolve(true)
         } else {
           resolve(false)
@@ -202,7 +202,7 @@ export default {
   changePSW ({ commit }, data) {
     return new Promise(resolve => {
       Axios.post('/blog_api/changePSW', data).then((res) => {
-        if (res.data.sta) {
+        if (Object.is(true, res.data.sta)) {
           resolve(res.data.sta)
         } else {
           resolve(false)
@@ -216,7 +216,7 @@ export default {
   },
   getSocialList ({ commit }) {
     Axios.get('/blog_api/social/get').then((res) => {
-      if (res.data.sta) {
+      if (Object.is(true, res.data.sta)) {
         commit(types.GETSOCIALLIST, res.data.info)
       }
     })
@@ -225,7 +225,7 @@ export default {
     let id = state.socialList[index]._id
     return new Promise(resolve => {
       Axios.get('/blog_api/social/remove/' + id).then((res) => {
-        if (res.data.sta) {
+        if (Object.is(true, res.data.sta)) {
           resolve(res.data.sta)
         } else {
           resolve(false)
@@ -240,7 +240,7 @@ export default {
   addSocial ({ commit }, data) {
     return new Promise(resolve => {
       Axios.post('/blog_api/social/add', data).then((res) => {
-        if (res.data.sta) {
+        if (Object.is(true, res.data.sta)) {
           resolve(res.data.sta)
         } else {
           resolve(false)
@@ -254,7 +254,7 @@ export default {
   },
   getSong ({ commit }, key) {
     Axios.get('/blog_api/song/search/' + key).then((res) => {
-      if (res.data.sta) {
+      if (Object.is(true, res.data.sta)) {
         commit(types.GETSONG, res.data.info)
       }
     }, (err) => {
@@ -270,7 +270,7 @@ export default {
   commentSub ({ commit }, data) {
     return new Promise(resolve => {
       Axios.post('/blog_api/comments', data).then(res => {
-        if (res.data.sta === true) {
+        if (Object.is(true, res.data.sta)) {
           resolve(res.data.sta)
         }
       })
@@ -278,14 +278,14 @@ export default {
   },
   getComments ({ commit }, articleId) {
     Axios.post('/blog_api/getcommentsList', articleId).then(res => {
-      if (res.data.sta === true && res.data.info !== '') {
+      if (Object.is(true, res.data.sta) && res.data.info !== '') {
         commit(types.GETCOMMENTS, res.data.info)
       }
     })
   },
   getUnviewCommentsCount ({ commit }) {
     Axios.get('/blog_api/getUnViewComments').then(res => {
-      if (res.data.sta === true) {
+      if (Object.is(true, res.data.sta)) {
         commit(types.GETUNVIEWCOMMENTSCOUNT, res.data.info)
       }
     })
@@ -293,7 +293,7 @@ export default {
   ViewedComments ({ commit }) {
     return new Promise(resolve => {
       Axios.get('/blog_api/ViewedComments').then(res => {
-        if (res.data.sta === true) {
+        if (Object.is(true, res.data.sta)) {
           resolve(true)
         }
       })
@@ -301,7 +301,7 @@ export default {
   },
   oAuthList ({ commit }) {
     Axios.get('/blog_api/oAuthList').then(res => {
-      if (res.data.sta === true) {
+      if (Object.is(true, res.data.sta)) {
         commit(types.OAUTHLIST, res.data.info)
       }
     })
@@ -309,7 +309,7 @@ export default {
   changeShow ({ commit }, data) {
     return new Promise(resolve => {
       Axios.post('/blog_api/changeShow', data).then(res => {
-        if (res.data.sta === true) {
+        if (Object.is(true, res.data.sta)) {
           resolve(true)
         }
       })
@@ -317,5 +317,14 @@ export default {
   },
   replyIt ({ commit }, index) {
     commit(types.REPLYIT, index)
+  },
+  delIt ({ commit }, data) {
+    return new Promise(resolve => {
+      Axios.post('/blog_api/delComment', data).then(res => {
+        if (Object.is(true, res.data.sta)) {
+          resolve(res.data.sta)
+        }
+      })
+    })
   }
 }

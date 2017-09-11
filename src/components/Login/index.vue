@@ -42,7 +42,7 @@ export default {
           this.$router.push('/admin')
         } else {
           this.$message({
-            message: '读取不到账号',
+            message: '账号或者密码出错请检查',
             type: 'error'
           })
         }
