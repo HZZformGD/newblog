@@ -7,8 +7,8 @@
             <div class="card">
                 <mu-card>
                 <mu-icon-button icon=":fa fa-close" class="close" @click="change()"/>
-                <div class="content">
-                  <div class="item" v-for="(item, index) in message" :key="item">
+                <div id="content">
+                  <div class="item" v-for="(item, index) in message" :key="item.reply_id">
                     <mu-card-text  :class="item.reply_id === nowId._id ? 'reply' : 'author'">
                     <span class="name">{{ item.name }}</span>
                     <mu-avatar  :src="item.avatar"/>
@@ -17,7 +17,7 @@
                     </mu-card-text>
                   </div>
                 </div>
-                <mu-text-field hintText="写点东西吧···" v-model="words" label="点击这里~" ref="content" class="replyInput" :underlineShow="underlineShow" multiLine :rows="3" fullWidth labelFloat/>
+                <mu-text-field hintText="写点东西吧···" @keyup.native.enter="reply" v-model="words" label="点击这里~" ref="content" class="replyInput" :underlineShow="underlineShow" multiLine :rows="3" fullWidth labelFloat/>
                 <mu-card-actions>
                   <mu-flat-button icon=":fa fa-reply" label="回复" @click="reply()"/>
                 </mu-card-actions>
@@ -55,15 +55,16 @@ export default {
   watch: {
     message (val) {
         window.sessionStorage.setItem('message', JSON.stringify(val))
-    },
-    height (val) {
-
     }
   },
   mounted () {
     var vm = this
-    socket.on('chat message', function(msg){
+    vm.box = document.getElementById('content')
+    socket.on('chat message', (msg) => {
       vm.message.push(msg)
+      setTimeout( () => {
+        vm.box.scrollTop = vm.box.scrollHeight
+      },300)
     })
   },
   methods: {
@@ -128,7 +129,7 @@ export default {
   .big{
       font-size: 50px;
   }
-  .content{
+  #content{
       height: 250px;
       overflow-y: auto;
   }
