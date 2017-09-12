@@ -24,13 +24,13 @@ var getArticles = async (ctx, next) => {
 }
 
 var getArticlesById = async (ctx, next) => {
-    var articleId = ctx.params.id
-    var data = await articles.getArticlesById(articleId)
+    let articleId = ctx.params.id
+    let data = await articles.getArticlesById(articleId)
     if (data) {
         ctx.response.type = 'application/json';
         ctx.response.body = {
             sta: true,
-            info: data,
+            info: data
         }
     } else {
         ctx.response.type = 'application/json';

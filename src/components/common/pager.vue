@@ -14,21 +14,10 @@ export default {
   computed: {
   },
   created () {
-    console.log(this)
   },
   methods: {
     changePage (page) {
       this.$emit('getArt', page)
-    },
-    next () {
-      if (this.currPage < this.pageSize) {
-        this.changePage(this.currPage + 1)
-      }
-    },
-    prev () {
-      if (this.currPage > 1) {
-        this.changePage(this.currPage - 1)
-      }
     }
   }
 }

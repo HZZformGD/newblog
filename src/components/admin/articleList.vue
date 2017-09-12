@@ -46,7 +46,7 @@ export default {
     }
   },
   created () {
-    this.getArticle(this.$store.state.currPage)
+    this.getArticle()
   },
   methods: {
     getArticle (skip) {
@@ -68,6 +68,7 @@ export default {
             type: 'success',
             message: '删除成功'
           })
+          this.getArticle()
         } else {
           this.$message.error('删除出错了，可能是服务器引起的')
         }

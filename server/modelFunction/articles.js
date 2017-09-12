@@ -1,5 +1,6 @@
 const articles = require('../models/articlesModel');
 const archive = require('../models/archiveModel');
+const comments = require('../models/commentsModel')
 
 
 var getArticles = function (limit, skip) {
@@ -30,7 +31,6 @@ var count = function () {
 }
 
 var getArticlesById = function (id) {
-    console.log(id)
     return new Promise(resolve => {
         articles.findById(id, { title: 1, content: 1, types: 1 })
             .lean()
@@ -85,8 +85,16 @@ var addArchive = function (title, createTime, createYear, createMonth, id) {
 var delArchiveById = function(id) {
     return new Promise(resolve => {
         archive.findOneAndRemove({aid:id}).lean().exec(function(err, res){
-            if (res) {
-                resolve(res)
+            if (Object.is(res.ok)) {
+                comments.remove({articleId:id}, (err,res) => {
+                    if (err) {
+                        console.log('err:'+err)
+                        resolve(false)
+                    } else if (Object.is(res.ok)) {
+                        console.log('res:'+res)
+                        resolve(res)
+                    }
+                })
             }
             else {
                 resolve(null)
