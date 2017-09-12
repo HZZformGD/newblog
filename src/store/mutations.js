@@ -12,7 +12,7 @@ export default {
   },
   [types.GETARTICLE] (state, data) {
     state.articles = data.info
-    state.articlesTotal = data.total
+    state.articlesTotal = Number.parseInt(data.total)
   },
   [types.GETARTICLEDETAILS] (state, data) {
     state.articleDetails = data

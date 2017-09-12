@@ -116,7 +116,6 @@ export default {
     async reply (id, cid) {
       var field = document.getElementById('field_' + id)
       var reply = document.getElementById('reply_' + id)
-      console.log()
       if (field.style.display === '' || field.style.display === 'none') {
         field.style.display = 'block'
       } else {

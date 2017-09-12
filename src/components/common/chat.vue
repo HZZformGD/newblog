@@ -19,7 +19,13 @@
                     </div>
                   </div>
                 </vue-scrollbar>
-                <mu-text-field hintText="写点东西吧···" @keyup.native.enter="reply" v-model="words" label="点击这里~" ref="content" class="replyInput" :underlineShow="underlineShow" multiLine :rows="3" fullWidth labelFloat/>
+                <div v-if="isIE" class="replyInput">
+                  <el-input type="textarea" :rows="2" @keyup.native.enter="reply" ref="content" placeholder="写点东西吧···" v-model="words">
+                  </el-input>
+                </div>
+                <div v-else-if="!isIE">
+                  <mu-text-field hintText="写点东西吧···" @keyup.native.enter="reply" autofocus v-model="words" label="点击这里~" ref="content" :underlineShow="underlineShow" multiLine :rows="3" fullWidth labelFloat/>
+                  </div>
                 <mu-card-actions>
                   <mu-flat-button icon=":fa fa-reply" label="回复" @click="reply()"/>
                 </mu-card-actions>
@@ -42,7 +48,8 @@ export default {
       toggle: true,
       words: '',
       underlineShow: false,
-      message: JSON.parse(window.sessionStorage.getItem('message')) || []
+      message: JSON.parse(window.sessionStorage.getItem('message')) || [],
+      isIE: false
     }
   },
   computed: {
@@ -57,6 +64,12 @@ export default {
       return data
     }
   },
+  created () {
+    let Browser = navigator.userAgent
+    if (Object.is(Browser.includes('MSIE'), true)) {
+      this.isIE = true
+    }
+  },
   watch: {
     message (val) {
       window.sessionStorage.setItem('message', JSON.stringify(val))
@@ -67,11 +80,9 @@ export default {
 
     socket.on('chat message', (msg) => {
       vm.message.push(msg)
-      console.log('first ', document.querySelectorAll('.item').length)
       setTimeout(() => {
         let _height = document.querySelectorAll('.item').length * 130
         this.$refs.Scrollbar.scrollToY(_height)
-        console.log('se ', document.querySelectorAll('.item').length)
       },400)
     })
   },
@@ -146,5 +157,8 @@ export default {
   }
   #content {
     min-height:250px;
+  }
+  .replyInput{
+    padding:10px 20px;
   }
 </style>

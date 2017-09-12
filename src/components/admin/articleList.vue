@@ -13,7 +13,7 @@
         <tr v-for="(item, index) in articleList ">
           <td>{{ item.title }}</td>
           <td class="type_td">
-            <span v-for="type in item.types">{{ type }}</span>
+            <span v-for="(type, index) in item.types">{{ type }}</span>
           </td>
           <td>{{ item.date }}</td>
           <td>
@@ -23,7 +23,7 @@
         </tr>
       </tbody>
     </table>
-    <Pager :limit="limit" ref="pager"></Pager>
+    <Pager  @getArt="getArticle" :limit="limit" :total="total"></Pager>
   </div>
 </template>
 
@@ -40,6 +40,9 @@ export default {
     articleList () {
       let newArticles = this.$store.getters.getArticleList
       return newArticles
+    },
+    total () {
+      return this.$store.state.articlesTotal
     }
   },
   created () {
@@ -49,7 +52,7 @@ export default {
     getArticle (skip) {
       var options = {
         limit: this.limit,
-        skip: skip
+        skip: skip || 1
       }
       this.$store.dispatch('getArticle', options)
     },

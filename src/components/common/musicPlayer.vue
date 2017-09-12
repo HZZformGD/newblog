@@ -5,7 +5,7 @@
     <mu-drawer :open="open" width="300" :right="right" :docked="docked" @close="toggle()">
       <mu-list class="scroll" @itemClick="docked ? '' : toggle()">
         <mu-sub-header>
-        <mu-text-field  icon=":fa fa-search" label="搜索歌名"  @change="search" @key.enter="search" v-model="key" labelFloat/>
+        <mu-text-field  icon=":fa fa-search" @keyup.native.enter="search" label="搜索歌名"  @change="search" @key.enter="search" v-model="key" labelFloat/>
         </mu-sub-header>
         <mu-list-item :title="item.name" :key="item.name" @click="click(index)" v-for="(item, index) in songList" >
           <mu-avatar :src="item.img" slot="leftAvatar"/>

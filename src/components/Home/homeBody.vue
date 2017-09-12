@@ -23,17 +23,48 @@
           </div>
         </div>
       </li>
+      <div class="page">
+        <Pager @getArt="getArticle" current=1 :limit="limit" :total="total"></Pager>
+      </div>
     </ul>
   </div>
 </template>
 
 <script>
+import Pager from '../common/pager'
 export default {
+  data () {
+    return {
+      limit: 3
+    }
+  },
   name: 'articleList',
   computed: {
     articlesList () {
       return this.$store.getters.getArticleList
+    },
+    total () {
+      return this.$store.state.articlesTotal
     }
+  },
+  mounted () {
+    this.getArticle()
+  },
+  methods: {
+    getArticle (skip) {
+      let stuff = document.querySelectorAll('.vue-scrollbar-transition')
+      this.$store.dispatch('getArticle', { limit: this.limit, skip: skip || 1 })
+      if (Object.is(stuff.length, 1)) {
+        stuff[0].style.marginTop = 0
+      } else if (Object.is(stuff.length, 2)) {
+        stuff[0].style.marginTop = 0
+        stuff[1].style.top = 0
+      }
+      
+    }
+  },
+  components: {
+    Pager
   }
 }
 </script>

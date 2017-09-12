@@ -12,9 +12,6 @@
         leave-active-class="animated fadeInOut">
         <router-view></router-view>
       </transition>
-      <div class="col-xs-8 col-xs-offset-2">
-        <Pager :limit='limit'></Pager>
-      </div>
       <UserInfo :userInfo="userInfo" :socialList="socialList"></UserInfo>
       <FooterComponent></FooterComponent>
     </div>
@@ -26,7 +23,6 @@ import headerComponent from '../common/Header'
 import minHeader from '../common/carvas'
 import UserInfo from '../common/UserInfo'
 import FooterComponent from '../common/footer'
-import Pager from '../common/pager'
 import chat from '../common/chat'
 import VueScrollbar from 'vue2-scrollbar';
 import scrollbar from 'vue2-scrollbar/dist/style/vue2-scrollbar.css'
@@ -34,21 +30,19 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      skip: 0,
-      limit: 3,
       tourist: 'http://wx4.sinaimg.cn/mw690/beb8586fgy1fgm02f5jxzg208w08wqv6.gif',
       nowId: JSON.parse(window.sessionStorage.getItem('userSession'))
     }
   },
   computed: mapState({
     userInfo: 'userInfo',
-    socialList: 'socialList'
+    socialList: 'socialList',
+    articlesTotal: 'articlesTotal'
   }),
   created () {
     this.getUserInfo()
     this.getSocialList()
     this.getNavList()
-    this.getArticle()
   },
   methods: {
     getUserInfo () {
@@ -57,11 +51,8 @@ export default {
     getSocialList () {
       this.$store.dispatch('getSocialList')
     },
-    getArticle () {
-      this.$store.dispatch('getArticle', { limit: this.limit, skip: this.skip })
-    },
     getArticleList (skip) {
-      this.$store.dispatch('getArticle', {limit: this.limit, skip: skip})
+      this.$store.dispatch('getArticle', {limit: 3, skip: skip})
     },
     getNavList () {
       this.$store.dispatch('getNavList')
@@ -71,7 +62,6 @@ export default {
     headerComponent,
     minHeader,
     UserInfo,
-    Pager,
     FooterComponent,
     chat,
     VueScrollbar
@@ -89,5 +79,8 @@ export default {
   }
   .s_bar{
     height:100%;
+  }
+  #pager{
+    padding-bottom: 10px;
   }
 </style>
